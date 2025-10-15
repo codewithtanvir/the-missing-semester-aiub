@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
         .from('files')
         .select('file_size');
 
-      const storageUsed = allFiles?.reduce((sum, file) => sum + (file.file_size || 0), 0) || 0;
+      const storageUsed = allFiles?.reduce((sum, file: any) => sum + (file.file_size || 0), 0) || 0;
 
       setAnalytics({
         totalFiles: filesCount || 0,
