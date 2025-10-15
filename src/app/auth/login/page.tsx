@@ -72,22 +72,22 @@ function LoginContent() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto rounded-full bg-blue-100 p-3 w-fit mb-4">
-            <BookOpen className="h-6 w-6 text-blue-600" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white p-3 sm:p-4">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="text-center px-4 sm:px-6 py-5 sm:py-6">
+          <div className="mx-auto rounded-full bg-blue-100 p-2.5 sm:p-3 w-fit mb-3 sm:mb-4">
+            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
           </div>
-          <CardTitle className="text-2xl">Sign In Required</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-xl sm:text-2xl">Sign In Required</CardTitle>
+          <CardDescription className="text-sm sm:text-base">
             Sign in with your Google account to access course resources
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6 pb-5 sm:pb-6">
           {error && (
-            <div className="rounded-lg bg-red-50 border border-red-200 p-3 flex items-start gap-2">
-              <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-red-700">
+            <div className="rounded-lg bg-red-50 border border-red-200 p-2.5 sm:p-3 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-red-700">
                 <p className="font-semibold">Authentication Error</p>
                 <p className="mt-1">{error}</p>
                 <p className="mt-2 text-xs text-red-600">

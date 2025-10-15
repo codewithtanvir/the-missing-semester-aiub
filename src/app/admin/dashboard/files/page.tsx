@@ -457,43 +457,49 @@ export default function FilesManagementPage() {
               <p>No files found</p>
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Course</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredFiles.map((file) => (
-                  <TableRow key={file.id}>
-                    <TableCell className="font-medium">{file.title}</TableCell>
-                    <TableCell>{file.courses?.code || 'N/A'}</TableCell>
-                    <TableCell>{getCategoryBadge(file.category)}</TableCell>
-                    <TableCell>{formatFileSize(file.file_size)}</TableCell>
-                    <TableCell>{formatDate(file.created_at)}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            setFileToDelete(file.id);
-                            setDeleteDialogOpen(true);
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4 text-red-600" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="overflow-x-auto -mx-6 sm:-mx-0">
+              <div className="inline-block min-w-full align-middle">
+                <div className="overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="whitespace-nowrap">Title</TableHead>
+                        <TableHead className="whitespace-nowrap">Course</TableHead>
+                        <TableHead className="whitespace-nowrap">Category</TableHead>
+                        <TableHead className="whitespace-nowrap">Size</TableHead>
+                        <TableHead className="whitespace-nowrap">Date</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredFiles.map((file) => (
+                        <TableRow key={file.id}>
+                          <TableCell className="font-medium whitespace-nowrap">{file.title}</TableCell>
+                          <TableCell className="whitespace-nowrap">{file.courses?.code || 'N/A'}</TableCell>
+                          <TableCell className="whitespace-nowrap">{getCategoryBadge(file.category)}</TableCell>
+                          <TableCell className="whitespace-nowrap">{formatFileSize(file.file_size)}</TableCell>
+                          <TableCell className="whitespace-nowrap">{formatDate(file.created_at)}</TableCell>
+                          <TableCell className="text-right whitespace-nowrap">
+                            <div className="flex items-center justify-end gap-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  setFileToDelete(file.id);
+                                  setDeleteDialogOpen(true);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4 text-red-600" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>

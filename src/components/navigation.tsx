@@ -64,17 +64,17 @@ export function Navigation() {
             : 'bg-white border-b border-gray-100'
         }`}
       >
-        <nav className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+        <nav className="container mx-auto px-3 sm:px-4">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
             <Link 
               href="/" 
-              className="flex items-center gap-2.5 group"
+              className="flex items-center gap-2 sm:gap-2.5 group min-w-0"
             >
-              <div className="rounded-lg bg-blue-500 p-2 group-hover:bg-blue-600 transition-colors shadow-md">
-                <BookOpen className="h-5 w-5 text-white" />
+              <div className="rounded-lg bg-blue-500 p-1.5 sm:p-2 group-hover:bg-blue-600 transition-colors shadow-md flex-shrink-0">
+                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <span className="font-bold text-lg text-blue-500">
+              <span className="font-bold text-sm sm:text-base lg:text-lg text-blue-500 truncate">
                 Missing Semester
               </span>
             </Link>
@@ -86,7 +86,7 @@ export function Navigation() {
                 return (
                   <Link key={link.href} href={link.href}>
                     <button
-                      className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                      className={`px-3 lg:px-4 py-2 rounded-lg font-medium text-sm transition-all ${
                         active 
                           ? 'bg-blue-500 text-white shadow-md' 
                           : 'text-neutral-800 hover:bg-neutral-100'
@@ -102,14 +102,14 @@ export function Navigation() {
               {isAuthenticated && (
                 <Link href="/profile">
                   <button
-                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
+                    className={`px-3 lg:px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
                       pathname === '/profile'
                         ? 'bg-blue-500 text-white shadow-md' 
                         : 'text-neutral-800 hover:bg-neutral-100'
                     }`}
                   >
                     <User className="h-4 w-4" />
-                    Profile
+                    <span className="hidden lg:inline">Profile</span>
                   </button>
                 </Link>
               )}
@@ -117,13 +117,14 @@ export function Navigation() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 hover:bg-neutral-100 rounded-lg transition-colors"
+              className="md:hidden p-1.5 sm:p-2 hover:bg-neutral-100 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <X className="h-6 w-6 text-neutral-800" />
+                <X className="h-5 w-5 sm:h-6 sm:w-6 text-neutral-800" />
               ) : (
-                <Menu className="h-6 w-6 text-neutral-800" />
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6 text-neutral-800" />
               )}
             </button>
           </div>
@@ -135,13 +136,13 @@ export function Navigation() {
             mobileMenuOpen ? 'max-h-96' : 'max-h-0'
           }`}
         >
-          <div className="container mx-auto px-4 py-3 space-y-1">
+          <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3 space-y-1">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link key={link.href} href={link.href}>
                   <button
-                    className={`w-full text-left px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
+                    className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-medium text-sm transition-all ${
                       active
                         ? 'bg-blue-500 text-white'
                         : 'text-neutral-800 hover:bg-neutral-100'
@@ -157,7 +158,7 @@ export function Navigation() {
             {isAuthenticated && (
               <Link href="/profile">
                 <button
-                  className={`w-full text-left px-4 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
+                  className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
                     pathname === '/profile'
                       ? 'bg-blue-500 text-white'
                       : 'text-neutral-800 hover:bg-neutral-100'
@@ -173,7 +174,7 @@ export function Navigation() {
       </header>
 
       {/* Spacer to prevent content from hiding under fixed header */}
-      <div className="h-16" />
+      <div className="h-14 sm:h-16" />
     </>
   );
 }

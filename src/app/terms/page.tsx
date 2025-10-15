@@ -8,29 +8,29 @@ import { ArrowLeft, FileText } from "lucide-react";
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 max-w-4xl">
         <Link href="/">
-          <Button variant="ghost" className="mb-6">
+          <Button variant="ghost" className="mb-4 sm:mb-6 text-sm sm:text-base">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
         </Link>
 
         <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="rounded-full bg-blue-100 p-3">
-                <FileText className="h-6 w-6 text-blue-600" />
+          <CardHeader className="px-4 sm:px-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="rounded-full bg-blue-100 p-2 sm:p-3">
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
               </div>
               <div>
-                <CardTitle className="text-3xl">Terms of Service</CardTitle>
-                <p className="text-sm text-gray-500 mt-1">
+                <CardTitle className="text-2xl sm:text-3xl">Terms of Service</CardTitle>
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">
                   Effective Date: October 15, 2025 | Last Updated: October 15, 2025
                 </p>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="prose prose-blue max-w-none">
+          <CardContent className="prose prose-sm sm:prose-base prose-blue max-w-none px-4 sm:px-6">
             <h2>Acceptance of Terms</h2>
             <p>
               By accessing and using AIUB Files (aiubfiles.app), you accept and agree 

@@ -118,31 +118,31 @@ export default function CoursesPage() {
       <Navigation />
       <BroadcastMessage />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
         <Breadcrumb items={[{ label: 'Courses' }]} />
 
         {/* Hero Section */}
-        <div className="mb-8 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">
+        <div className="mb-6 sm:mb-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 px-4">
             Browse All Courses
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Search through {courses.length} courses and find learning materials instantly
           </p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-6 sm:mb-8 space-y-3 sm:space-y-4">
           {/* Search Bar */}
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-2 sm:gap-3 items-center">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Search by course code, name, instructor..."
+                placeholder="Search courses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-11 text-base"
+                className="pl-9 sm:pl-10 pr-9 sm:pr-10 h-10 sm:h-11 text-sm sm:text-base"
               />
               {searchQuery && (
                 <button
@@ -157,24 +157,24 @@ export default function CoursesPage() {
             <Button
               variant={showFilters ? "default" : "outline"}
               onClick={() => setShowFilters(!showFilters)}
-              className="h-11 px-4"
+              className="h-10 sm:h-11 px-3 sm:px-4 text-sm sm:text-base"
             >
-              <Filter className="h-4 w-4 mr-2" />
-              Filters
+              <Filter className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Filters</span>
             </Button>
           </div>
 
           {/* Filter Panel */}
           {showFilters && (
-            <div className="bg-white rounded-lg border p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Department</h3>
+            <div className="bg-white rounded-lg border p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Department</h3>
                 {selectedDepartment && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedDepartment(null)}
-                    className="text-sm"
+                    className="text-xs sm:text-sm h-8"
                   >
                     Clear
                   </Button>
@@ -185,11 +185,11 @@ export default function CoursesPage() {
                   <Badge
                     key={dept}
                     variant={selectedDepartment === dept ? "default" : "outline"}
-                    className="cursor-pointer px-3 py-1.5 text-sm"
+                    className="cursor-pointer px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm"
                     onClick={() => setSelectedDepartment(selectedDepartment === dept ? null : dept)}
                   >
                     {dept}
-                    <span className="ml-1.5 text-xs opacity-60">
+                    <span className="ml-1 sm:ml-1.5 text-xs opacity-60">
                       ({courses.filter(c => c.department === dept).length})
                     </span>
                   </Badge>
@@ -200,16 +200,16 @@ export default function CoursesPage() {
 
           {/* Popular Departments Quick Access */}
           {!showFilters && !selectedDepartment && (
-            <div className="flex items-center gap-2 justify-center flex-wrap">
-              <span className="text-sm text-gray-500 flex items-center gap-1">
-                <TrendingUp className="h-4 w-4" />
-                Popular:
+            <div className="flex items-center gap-2 justify-center flex-wrap px-2">
+              <span className="text-xs sm:text-sm text-gray-500 flex items-center gap-1">
+                <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Popular:</span>
               </span>
               {popularDepartments.map((dept) => (
                 <Badge
                   key={dept}
                   variant="outline"
-                  className="cursor-pointer hover:bg-blue-50"
+                  className="cursor-pointer hover:bg-blue-50 text-xs sm:text-sm px-2 sm:px-2.5 py-0.5 sm:py-1"
                   onClick={() => setSelectedDepartment(dept)}
                 >
                   {dept}
@@ -220,18 +220,18 @@ export default function CoursesPage() {
         </div>
 
         {/* Results Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">
               {filteredCourses.length} {filteredCourses.length === 1 ? 'Course' : 'Courses'}
               {selectedDepartment && (
                 <>
                   {' '}in{' '}
-                  <Badge variant="default" className="ml-1">
+                  <Badge variant="default" className="ml-1 text-xs sm:text-sm">
                     {selectedDepartment}
                     <button
                       onClick={() => setSelectedDepartment(null)}
-                      className="ml-2 hover:bg-blue-700 rounded-full p-0.5"
+                      className="ml-1.5 sm:ml-2 hover:bg-blue-700 rounded-full p-0.5"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -240,29 +240,29 @@ export default function CoursesPage() {
               )}
             </h3>
             {searchQuery && (
-              <span className="text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-gray-500">
                 for "{searchQuery}"
               </span>
             )}
           </div>
           
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+          <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 w-fit">
             <Button
               variant={viewMode === 'grid' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => setViewMode('grid')}
-              className="h-8"
+              className="h-7 sm:h-8 px-2 sm:px-3"
             >
-              <Grid className="h-4 w-4" />
+              <Grid className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
             <Button
               variant={viewMode === 'list' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => setViewMode('list')}
-              className="h-8"
+              className="h-7 sm:h-8 px-2 sm:px-3"
             >
-              <List className="h-4 w-4" />
+              <List className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </div>
@@ -279,17 +279,17 @@ export default function CoursesPage() {
           <>
             {/* Pinned Courses Section */}
             {pinnedCourseIds.size > 0 && !searchQuery && !selectedDepartment && (
-              <div className="mb-12">
-                <div className="flex items-center gap-2 mb-6">
-                  <Pin className="h-5 w-5 text-yellow-500 fill-current" />
-                  <h2 className="text-2xl font-bold text-gray-900">Pinned Courses</h2>
-                  <Badge variant="secondary" className="ml-2">
+              <div className="mb-8 sm:mb-12">
+                <div className="flex items-center gap-2 mb-4 sm:mb-6 px-1">
+                  <Pin className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500 fill-current" />
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Pinned Courses</h2>
+                  <Badge variant="secondary" className="ml-2 text-xs sm:text-sm">
                     {pinnedCourseIds.size}
                   </Badge>
                 </div>
                 <div className={viewMode === 'grid' 
-                  ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                  : "space-y-4"
+                  ? "grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                  : "space-y-3 sm:space-y-4"
                 }>
                   {courses
                     .filter(course => pinnedCourseIds.has(course.id))
@@ -303,15 +303,15 @@ export default function CoursesPage() {
                       />
                     ))}
                 </div>
-                <div className="border-t mt-8 mb-8"></div>
+                <div className="border-t mt-6 sm:mt-8 mb-6 sm:mb-8"></div>
               </div>
             )}
 
             {/* All Courses Section */}
             {filteredCourses.length > 0 ? (
               <div className={viewMode === 'grid' 
-                ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                : "space-y-4"
+                ? "grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                : "space-y-3 sm:space-y-4"
               }>
                 {filteredCourses.map((course) => (
                   <CourseCard 
@@ -324,10 +324,10 @@ export default function CoursesPage() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
-                <Search className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
-                <p className="text-gray-600 mb-4">
+              <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8 sm:p-12 text-center">
+                <Search className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mb-3 sm:mb-4" />
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 px-4">
                   {searchQuery || selectedDepartment
                     ? "Try adjusting your search or filters"
                     : "No courses available yet"}
@@ -339,6 +339,7 @@ export default function CoursesPage() {
                       setSearchQuery("");
                       setSelectedDepartment(null);
                     }}
+                    className="text-sm sm:text-base"
                   >
                     Clear all filters
                   </Button>
@@ -349,8 +350,8 @@ export default function CoursesPage() {
         )}
       </main>
 
-      <footer className="border-t bg-white mt-16">
-        <div className="container mx-auto px-4 py-6 text-center text-sm text-gray-600">
+      <footer className="border-t bg-white mt-12 sm:mt-16">
+        <div className="container mx-auto px-4 py-4 sm:py-6 text-center text-xs sm:text-sm text-gray-600">
           © {new Date().getFullYear()} Missing Semester. All rights reserved.
         </div>
       </footer>
