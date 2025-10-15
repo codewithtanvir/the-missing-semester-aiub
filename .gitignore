@@ -20,6 +20,15 @@
 .next
 next-env.d.ts
 
+# PWA (auto-generated files)
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map
+/public/worker-*.js
+/public/worker-*.js.map
+/public/fallback-*.js
+
 # Production
 /build
 /dist
@@ -88,7 +97,8 @@ desktop.ini
 .cache/
 
 # Documentation (project-specific)
-/docs
+# Uncomment to exclude docs from git:
+# /docs
 
 # Supabase
 .supabase/

@@ -1,0 +1,22 @@
+<!-- Icon SVG for PWA - Can be converted to PNG using online tools -->
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="#2563eb"/>
+  
+  <!-- Book Icon -->
+  <path d="M128 128C128 117.565 136.565 109 147 109H365C375.435 109 384 117.565 384 128V384C384 394.435 375.435 403 365 403H147C136.565 403 128 394.435 128 384V128Z" fill="white"/>
+  
+  <!-- Book Spine -->
+  <rect x="147" y="109" width="40" height="294" fill="#1e40af"/>
+  
+  <!-- Book Pages -->
+  <line x1="220" y1="160" x2="350" y2="160" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+  <line x1="220" y1="200" x2="350" y2="200" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+  <line x1="220" y1="240" x2="350" y2="240" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+  <line x1="220" y1="280" x2="320" y2="280" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Terminal Icon Overlay -->
+  <circle cx="380" cy="360" r="60" fill="#10b981"/>
+  <path d="M355 350L365 360L355 370" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="375" y1="368" x2="390" y2="368" stroke="white" stroke-width="6" stroke-linecap="round"/>
+</svg>

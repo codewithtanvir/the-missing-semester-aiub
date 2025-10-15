@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Install Prompt - Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .demo-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .demo-section h2 {
+            color: #2563eb;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+        }
+        .feature h3 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .feature p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .preview {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        .preview-title {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .mockup {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .mockup-header {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .mockup-icon {
+            width: 48px;
+            height: 48px;
+            background: #2563eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .mockup-content h3 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .mockup-content p {
+            color: #64748b;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .mockup-benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.75em;
+            color: #64748b;
+            margin-top: 10px;
+        }
+        .mockup-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .tag.green {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .tag.yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .ios-instructions {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .ios-instructions h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        .ios-instructions ol {
+            margin-left: 20px;
+            color: #78350f;
+        }
+        .ios-instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 PWA Install Prompt</h1>
+            <p>Beautiful, Smart, User-Friendly</p>
+        </div>
+
+        <div class="demo-section">
+            <h2>✨ What's Included</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>🎯 Smart Timing</h3>
+                    <p>Appears after 3 seconds, giving users time to browse before prompting them to install.</p>
+                </div>
+                <div class="feature">
+                    <h3>🧠 Intelligent Detection</h3>
+                    <p>Automatically detects iOS, Android, or Desktop and shows appropriate UI.</p>
+                </div>
+                <div class="feature">
+                    <h3>💾 Remembers Choice</h3>
+                    <p>Respects user dismissal for 7 days. Won't spam with repeated prompts.</p>
+                </div>
+                <div class="feature">
+                    <h3>🎨 Beautiful Design</h3>
+                    <p>Modern gradient backdrop, smooth animations, professional appearance.</p>
+                </div>
+                <div class="feature">
+                    <h3>📱 Platform-Specific</h3>
+                    <p>Shows install button on Android/Desktop, instructions on iOS Safari.</p>
+                </div>
+                <div class="feature">
+                    <h3>⚡ Non-Intrusive</h3>
+                    <p>Slides up from bottom, easy to dismiss, doesn't block content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📱 Android / Desktop Preview</h2>
+            <div class="preview">
+                <div class="preview-title">What users see on Android & Desktop:</div>
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-icon">📥</div>
+                        <div class="mockup-content" style="flex: 1;">
+                            <h3>Install Missing Semester</h3>
+                            <p>Get quick access and work offline. Install this app on your device for the best experience.</p>
+                            <div class="mockup-benefits">
+                                <span>✓ Works offline</span>
+                                <span>•</span>
+                                <span>✓ Fast loading</span>
+                                <span>•</span>
+                                <span>✓ Push notifications</span>
+                                <span>•</span>
+                                <span>✓ Native feel</span>
+                            </div>
+                        </div>
+                        <button style="background: none; border: none; cursor: pointer; font-size: 20px; color: #94a3b8;">×</button>
+                    </div>
+                    <div class="mockup-buttons">
+                        <button class="btn btn-secondary">Not now</button>
+                        <button class="btn btn-primary">Install App</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🍎 iOS Preview</h2>
+            <div class="preview">
+                <div class="preview-title">What users see on iPhone/iPad:</div>
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-icon">📱</div>
+                        <div class="mockup-content" style="flex: 1;">
+                            <h3>Install Missing Semester</h3>
+                            <p>Install this app on your iPhone: tap <span style="background: #dbeafe; padding: 2px 8px; border-radius: 4px; color: #2563eb; font-weight: 600;">⬆️</span> then "Add to Home Screen".</p>
+                            <div class="mockup-benefits">
+                                <span>✓ Works offline</span>
+                                <span>•</span>
+                                <span>✓ Fast loading</span>
+                                <span>•</span>
+                                <span>✓ Native feel</span>
+                            </div>
+                        </div>
+                        <button style="background: none; border: none; cursor: pointer; font-size: 20px; color: #94a3b8;">×</button>
+                    </div>
+                    <div class="mockup-buttons">
+                        <button class="btn btn-secondary">Don't show again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎯 Key Features</h2>
+            
+            <div style="margin: 20px 0;">
+                <span class="tag">Auto-Detects Platform</span>
+                <span class="tag">Smart Timing (3s delay)</span>
+                <span class="tag green">Respects User Choice</span>
+                <span class="tag">7-Day Dismissal</span>
+                <span class="tag yellow">Never Show Option</span>
+                <span class="tag green">One-Click Install</span>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Component Location</h3>
+            <div class="code-block">
+                <pre>src/components/pwa-install-prompt.tsx  ← Auto-prompt component
+src/components/install-button.tsx       ← Manual button (optional)
+src/app/layout.tsx                      ← Prompt added here (site-wide)</pre>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">How to Use Manual Install Button</h3>
+            <div class="code-block">
+                <pre>import { InstallButton } from '@/components/install-button'
+
+// Add anywhere in your app:
+&lt;InstallButton /&gt;
+
+// Shows:
+// - Install button (if not installed)
+// - "App installed" checkmark (if installed)
+// - iOS instructions modal (on iOS)</pre>
+            </div>
+
+            <div class="ios-instructions">
+                <h4>📱 iOS Installation Steps</h4>
+                <ol>
+                    <li>Open your app in <strong>Safari</strong></li>
+                    <li>Tap the <strong>Share</strong> button (⬆️) at the bottom</li>
+                    <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                    <li>Tap <strong>"Add"</strong> to confirm</li>
+                    <li>App icon appears on home screen! 🎉</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>⚙️ Customization Options</h2>
+            
+            <h3 style="margin-bottom: 15px;">Change Timing</h3>
+            <div class="code-block">
+                <pre>// In pwa-install-prompt.tsx
+setTimeout(() => {
+  setShowPrompt(true)
+}, 3000) // Change to 5000 for 5 seconds</pre>
+            </div>
+
+            <h3 style="margin-top: 20px; margin-bottom: 15px;">Change Dismissal Period</h3>
+            <div class="code-block">
+                <pre>// Currently 7 days
+const oneWeek = 7 * 24 * 60 * 60 * 1000
+
+// Change to 14 days:
+const twoWeeks = 14 * 24 * 60 * 60 * 1000</pre>
+            </div>
+
+            <h3 style="margin-top: 20px; margin-bottom: 15px;">Change Benefits Text</h3>
+            <div class="code-block">
+                <pre>&lt;span&gt;✓ Your custom benefit&lt;/span&gt;
+&lt;span&gt;•&lt;/span&gt;
+&lt;span&gt;✓ Another benefit&lt;/span&gt;</pre>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🧪 Testing</h2>
+            
+            <h3 style="margin-bottom: 15px;">Clear Dismissal (for testing)</h3>
+            <div class="code-block">
+                <pre>// In browser console:
+localStorage.removeItem('pwa-prompt-dismissed')
+
+// Or clear all:
+localStorage.clear()
+
+// Then reload the page</pre>
+            </div>
+
+            <h3 style="margin-top: 20px; margin-bottom: 15px;">Test Flow</h3>
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li>Visit your app</li>
+                <li>Wait 3 seconds → Prompt appears</li>
+                <li>Click "Not now" → Dismisses</li>
+                <li>Reload page → No prompt (stored in localStorage)</li>
+                <li>Clear localStorage → Prompt shows again</li>
+            </ol>
+        </div>
+
+        <div class="demo-section">
+            <h2>📚 Documentation</h2>
+            <p style="margin-bottom: 20px;">Complete guides available:</p>
+            <ul style="margin-left: 20px; line-height: 2;">
+                <li><strong>PWA-INSTALL-PROMPT-GUIDE.md</strong> - Complete implementation guide</li>
+                <li><strong>PWA-README.md</strong> - Quick start guide</li>
+                <li><strong>PWA-TESTING-GUIDE.md</strong> - Mobile testing instructions</li>
+                <li><strong>PWA-IMPLEMENTATION.md</strong> - Technical details</li>
+            </ul>
+        </div>
+
+        <div class="demo-section" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white;">
+            <h2 style="color: white;">🎉 You're All Set!</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px; opacity: 0.95;">
+                The install prompt is already integrated into your app. Just add your icons and users will see the beautiful prompt automatically!
+            </p>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; margin-top: 20px;">
+                <h3 style="color: white; margin-bottom: 10px;">Next Steps:</h3>
+                <ol style="margin-left: 20px; line-height: 1.8; opacity: 0.95;">
+                    <li>Generate icons using <code>icon-generator.html</code></li>
+                    <li>Build your app: <code>npm run build</code></li>
+                    <li>Deploy to production</li>
+                    <li>Visit on mobile → See the prompt! 📱</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
