@@ -54,11 +54,45 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Refresh session if expired - required for Server Components
-  const { data: { session } } = await supabase.auth.getSession()
+  // Get authenticated user - validates the session server-side
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const pathname = request.nextUrl.pathname
+
+  // Public routes that don't require authentication
+  const publicRoutes = [
+    '/',
+    '/auth/login',
+    '/auth/callback',
+    '/onboarding',
+  ]
+
+  // Check if current path is public
+  const isPublicRoute = publicRoutes.some(route => pathname === route)
+
+  // If not logged in and trying to access protected route
+  if (!user && !isPublicRoute) {
+    const redirectUrl = new URL('/auth/login', request.url)
+    redirectUrl.searchParams.set('redirectTo', pathname)
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  // If logged in but not on onboarding/auth pages, check if profile is completed
+  if (user && !isPublicRoute && pathname !== '/onboarding') {
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('profile_completed')
+      .eq('user_id', user.id)
+      .single()
+
+    // If profile doesn't exist or isn't completed, redirect to onboarding
+    if (!profile || !(profile as any).profile_completed) {
+      return NextResponse.redirect(new URL('/onboarding', request.url))
+    }
+  }
 
   // If we're on the auth callback page, let the page component handle it
-  if (request.nextUrl.pathname === '/auth/callback') {
+  if (pathname === '/auth/callback') {
     return response
   }
 

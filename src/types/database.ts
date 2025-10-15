@@ -12,6 +12,25 @@ export interface Course {
   created_at: string;
 }
 
+export interface UserProfile {
+  id: string;
+  user_id: string;
+  full_name: string;
+  student_id: string;
+  gender: string;
+  profile_completed: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PinnedCourse {
+  id: string;
+  user_id: string;
+  course_id: string;
+  pinned_at: string;
+  created_at: string;
+}
+
 export interface CourseFile {
   id: string;
   course_id: string;
@@ -39,6 +58,16 @@ export interface Database {
         Row: CourseFile;
         Insert: Omit<CourseFile, "id" | "created_at" | "updated_at" | "download_count" | "courses">;
         Update: Partial<Omit<CourseFile, "id" | "created_at" | "courses">>;
+      };
+      user_profiles: {
+        Row: UserProfile;
+        Insert: Omit<UserProfile, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<UserProfile, "id" | "created_at" | "updated_at">>;
+      };
+      pinned_courses: {
+        Row: PinnedCourse;
+        Insert: Omit<PinnedCourse, "id" | "created_at" | "pinned_at">;
+        Update: Partial<Omit<PinnedCourse, "id" | "created_at">>;
       };
     };
   };

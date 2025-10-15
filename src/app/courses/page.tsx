@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { BookOpen, Search, Filter, Grid, List, X, TrendingUp, ArrowLeft } from "lucide-react";
+import { BookOpen, Search, Filter, Grid, List, X, TrendingUp, ArrowLeft, Pin } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { CourseCard } from "@/components/course-card";
 import { Input } from "@/components/ui/input";
@@ -15,12 +15,27 @@ import type { Course } from "@/types/database";
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [pinnedCourseIds, setPinnedCourseIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
   const supabase = createClient();
+
+  const loadPinnedCourses = async () => {
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return;
+
+    const { data, error } = await supabase
+      .from('pinned_courses')
+      .select('course_id')
+      .eq('user_id', user.id) as any;
+
+    if (!error && data) {
+      setPinnedCourseIds(new Set(data.map((p: any) => p.course_id)));
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -33,6 +48,9 @@ export default function CoursesPage() {
       if (!error && coursesData) {
         setCourses(coursesData);
       }
+
+      // Load pinned courses
+      await loadPinnedCourses();
       
       setLoading(false);
     };
@@ -253,36 +271,77 @@ export default function CoursesPage() {
               <p className="text-gray-600">Loading courses...</p>
             </div>
           </div>
-        ) : filteredCourses.length > 0 ? (
-          <div className={viewMode === 'grid' 
-            ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-            : "space-y-4"
-          }>
-            {filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} viewMode={viewMode} />
-            ))}
-          </div>
         ) : (
-          <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
-            <Search className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
-            <p className="text-gray-600 mb-4">
-              {searchQuery || selectedDepartment
-                ? "Try adjusting your search or filters"
-                : "No courses available yet"}
-            </p>
-            {(searchQuery || selectedDepartment) && (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedDepartment(null);
-                }}
-              >
-                Clear all filters
-              </Button>
+          <>
+            {/* Pinned Courses Section */}
+            {pinnedCourseIds.size > 0 && !searchQuery && !selectedDepartment && (
+              <div className="mb-12">
+                <div className="flex items-center gap-2 mb-6">
+                  <Pin className="h-5 w-5 text-yellow-500 fill-current" />
+                  <h2 className="text-2xl font-bold text-gray-900">Pinned Courses</h2>
+                  <Badge variant="secondary" className="ml-2">
+                    {pinnedCourseIds.size}
+                  </Badge>
+                </div>
+                <div className={viewMode === 'grid' 
+                  ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                  : "space-y-4"
+                }>
+                  {courses
+                    .filter(course => pinnedCourseIds.has(course.id))
+                    .map((course) => (
+                      <CourseCard 
+                        key={course.id} 
+                        course={course} 
+                        viewMode={viewMode}
+                        isPinned={true}
+                        onPinChange={loadPinnedCourses}
+                      />
+                    ))}
+                </div>
+                <div className="border-t mt-8 mb-8"></div>
+              </div>
             )}
-          </div>
+
+            {/* All Courses Section */}
+            {filteredCourses.length > 0 ? (
+              <div className={viewMode === 'grid' 
+                ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                : "space-y-4"
+              }>
+                {filteredCourses.map((course) => (
+                  <CourseCard 
+                    key={course.id} 
+                    course={course} 
+                    viewMode={viewMode}
+                    isPinned={pinnedCourseIds.has(course.id)}
+                    onPinChange={loadPinnedCourses}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
+                <Search className="mx-auto h-16 w-16 text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
+                <p className="text-gray-600 mb-4">
+                  {searchQuery || selectedDepartment
+                    ? "Try adjusting your search or filters"
+                    : "No courses available yet"}
+                </p>
+                {(searchQuery || selectedDepartment) && (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setSelectedDepartment(null);
+                    }}
+                  >
+                    Clear all filters
+                  </Button>
+                )}
+              </div>
+            )}
+          </>
         )}
       </main>
 

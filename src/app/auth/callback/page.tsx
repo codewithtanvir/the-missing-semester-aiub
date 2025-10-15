@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
+type UserProfile = {
+  profile_completed: boolean;
+};
+
 export default function AuthCallbackPage() {
   const router = useRouter();
   const supabase = createClient();
@@ -19,6 +23,7 @@ export default function AuthCallbackPage() {
         const accessToken = hashParams.get('access_token');
         const refreshToken = hashParams.get('refresh_token');
         const code = searchParams.get('code');
+        const redirectTo = searchParams.get('redirectTo') || '/courses';
 
         console.log('Callback params:', { 
           hasAccessToken: !!accessToken, 
@@ -44,38 +49,56 @@ export default function AuthCallbackPage() {
 
           if (data.session) {
             console.log('Session created successfully:', data.session.user.email);
-            router.push('/');
+            
+            // Check if user profile exists
+            const { data: profile } = await supabase
+              .from('user_profiles')
+              .select('profile_completed')
+              .eq('user_id', data.session.user.id)
+              .single() as { data: UserProfile | null };
+
+            if (!profile || !profile.profile_completed) {
+              // New user - redirect to onboarding
+              router.push('/onboarding');
+            } else {
+              // Existing user - redirect to destination
+              router.push(redirectTo);
+            }
             return;
           }
         }
 
-        // Otherwise, let Supabase handle the code exchange
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        // Otherwise, let Supabase handle the code exchange and get authenticated user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-        if (sessionError) {
-          console.error('Session error:', sessionError);
-          setError(sessionError.message);
-          setTimeout(() => router.push('/auth/login?error=' + encodeURIComponent(sessionError.message)), 2000);
+        if (userError) {
+          console.error('User authentication error:', userError);
+          setError(userError.message);
+          setTimeout(() => router.push('/auth/login?error=' + encodeURIComponent(userError.message)), 2000);
           return;
         }
 
-        if (session) {
-          console.log('Session found:', session.user.email);
-          router.push('/');
-        } else {
-          console.log('No session found, checking for existing user...');
+        if (user) {
+          console.log('User authenticated:', user.email);
           
-          // Check if user is already logged in
-          const { data: { user }, error: userError } = await supabase.auth.getUser();
-          
-          if (user) {
-            console.log('User found:', user.email);
-            router.push('/');
+          // Check if user profile exists
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('profile_completed')
+            .eq('user_id', user.id)
+            .single() as { data: UserProfile | null };
+
+          if (!profile || !profile.profile_completed) {
+            // New user - redirect to onboarding
+            router.push('/onboarding');
           } else {
-            console.log('No user session');
-            setError('Authentication completed but no session was created. Please try again.');
-            setTimeout(() => router.push('/auth/login?error=no_session'), 2000);
+            // Existing user - redirect to destination
+            router.push(redirectTo);
           }
+        } else {
+          console.log('No authenticated user found');
+          setError('Authentication completed but no user session was created. Please try again.');
+          setTimeout(() => router.push('/auth/login?error=no_session'), 2000);
         }
       } catch (error: any) {
         console.error('Error during auth callback:', error);

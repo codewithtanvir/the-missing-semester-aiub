@@ -5,11 +5,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookOpen, Home, Library, User, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@/lib/supabase/client';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const pathname = usePathname();
+  const supabase = createClient();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +21,23 @@ export function Navigation() {
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Check authentication status
+    const checkAuth = async () => {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      setIsAuthenticated(!!user && !error);
+    };
+    
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Close mobile menu when route changes
@@ -77,6 +97,22 @@ export function Navigation() {
                   </Link>
                 );
               })}
+              
+              {/* Profile Button - Only show when authenticated */}
+              {isAuthenticated && (
+                <Link href="/profile">
+                  <button
+                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
+                      pathname === '/profile'
+                        ? 'bg-blue-500 text-white shadow-md' 
+                        : 'text-neutral-800 hover:bg-neutral-100'
+                    }`}
+                  >
+                    <User className="h-4 w-4" />
+                    Profile
+                  </button>
+                </Link>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -96,7 +132,7 @@ export function Navigation() {
         {/* Mobile Menu */}
         <div
           className={`md:hidden border-t border-neutral-200 bg-white overflow-hidden transition-all duration-200 ${
-            mobileMenuOpen ? 'max-h-64' : 'max-h-0'
+            mobileMenuOpen ? 'max-h-96' : 'max-h-0'
           }`}
         >
           <div className="container mx-auto px-4 py-3 space-y-1">
@@ -116,6 +152,22 @@ export function Navigation() {
                 </Link>
               );
             })}
+            
+            {/* Profile Link - Mobile - Only show when authenticated */}
+            {isAuthenticated && (
+              <Link href="/profile">
+                <button
+                  className={`w-full text-left px-4 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
+                    pathname === '/profile'
+                      ? 'bg-blue-500 text-white'
+                      : 'text-neutral-800 hover:bg-neutral-100'
+                  }`}
+                >
+                  <User className="h-4 w-4" />
+                  Profile
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
