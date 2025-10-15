@@ -18,6 +18,7 @@ export interface UserProfile {
   full_name: string;
   student_id: string;
   gender: string;
+  role: 'user' | 'admin';
   profile_completed: boolean;
   created_at: string;
   updated_at: string;
@@ -46,6 +47,16 @@ export interface CourseFile {
   courses?: Course;
 }
 
+export interface BroadcastMessage {
+  id: string;
+  message: string;
+  type: 'info' | 'warning' | 'success' | 'error';
+  is_active: boolean;
+  created_by?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -68,6 +79,11 @@ export interface Database {
         Row: PinnedCourse;
         Insert: Omit<PinnedCourse, "id" | "created_at" | "pinned_at">;
         Update: Partial<Omit<PinnedCourse, "id" | "created_at">>;
+      };
+      broadcast_messages: {
+        Row: BroadcastMessage;
+        Insert: Omit<BroadcastMessage, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<BroadcastMessage, "id" | "created_at" | "updated_at">>;
       };
     };
   };

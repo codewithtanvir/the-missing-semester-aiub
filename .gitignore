@@ -93,7 +93,8 @@ desktop.ini
 # Supabase
 .supabase/
 
-# Database dumps
+# Database dumps and SQL files
+*.sql
 *.sql.gz
 *.dump
 /migrations/*.local.sql

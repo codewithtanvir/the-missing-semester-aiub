@@ -65,6 +65,7 @@ export async function middleware(request: NextRequest) {
     '/auth/login',
     '/auth/callback',
     '/onboarding',
+    '/admin', // Admin login page
   ]
 
   // Check if current path is public
@@ -81,9 +82,17 @@ export async function middleware(request: NextRequest) {
   if (user && !isPublicRoute && pathname !== '/onboarding') {
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('profile_completed')
+      .select('profile_completed, role')
       .eq('user_id', user.id)
       .single()
+
+    // Check if trying to access admin routes
+    if (pathname.startsWith('/admin/dashboard')) {
+      if (!profile || (profile as any).role !== 'admin') {
+        // Not an admin, redirect to home
+        return NextResponse.redirect(new URL('/', request.url))
+      }
+    }
 
     // If profile doesn't exist or isn't completed, redirect to onboarding
     if (!profile || !(profile as any).profile_completed) {

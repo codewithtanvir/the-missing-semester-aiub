@@ -12,7 +12,8 @@ import {
   Settings, 
   LogOut,
   Menu,
-  X
+  X,
+  Megaphone
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -27,6 +28,11 @@ const navItems: NavItem[] = [
     href: '/admin/dashboard',
     label: 'Dashboard',
     icon: <LayoutDashboard className="h-5 w-5" />,
+  },
+  {
+    href: '/admin/dashboard/broadcast',
+    label: 'Broadcast',
+    icon: <Megaphone className="h-5 w-5" />,
   },
   {
     href: '/admin/dashboard/files',

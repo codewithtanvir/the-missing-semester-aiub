@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/navigation";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { BackToTop } from "@/components/back-to-top";
+import { BroadcastMessage } from "@/components/broadcast-message";
 import type { Course } from "@/types/database";
 
 export default function CoursesPage() {
@@ -115,6 +116,7 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <Navigation />
+      <BroadcastMessage />
 
       <main className="container mx-auto px-4 py-8">
         <Breadcrumb items={[{ label: 'Courses' }]} />
@@ -133,28 +135,29 @@ export default function CoursesPage() {
         <div className="mb-8 space-y-4">
           {/* Search Bar */}
           <div className="flex gap-3 items-center">
-            <div className="relative flex-1 max-w-2xl mx-auto">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Search by course code, name, instructor, or keywords..."
+                placeholder="Search by course code, name, instructor..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-12 text-base border-2 focus:border-blue-500"
+                className="pl-10 pr-10 h-11 text-base"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  aria-label="Clear search"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-4 w-4" />
                 </button>
               )}
             </div>
             <Button
               variant={showFilters ? "default" : "outline"}
               onClick={() => setShowFilters(!showFilters)}
-              className="h-12 px-4"
+              className="h-11 px-4"
             >
               <Filter className="h-4 w-4 mr-2" />
               Filters
@@ -163,16 +166,17 @@ export default function CoursesPage() {
 
           {/* Filter Panel */}
           {showFilters && (
-            <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <div className="bg-white rounded-lg border p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Filter by Department</h3>
+                <h3 className="font-semibold text-gray-900">Department</h3>
                 {selectedDepartment && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedDepartment(null)}
+                    className="text-sm"
                   >
-                    Clear Filter
+                    Clear
                   </Button>
                 )}
               </div>
@@ -181,11 +185,11 @@ export default function CoursesPage() {
                   <Badge
                     key={dept}
                     variant={selectedDepartment === dept ? "default" : "outline"}
-                    className="cursor-pointer px-4 py-2 text-sm hover:bg-blue-100 transition-colors"
+                    className="cursor-pointer px-3 py-1.5 text-sm"
                     onClick={() => setSelectedDepartment(selectedDepartment === dept ? null : dept)}
                   >
                     {dept}
-                    <span className="ml-2 text-xs opacity-70">
+                    <span className="ml-1.5 text-xs opacity-60">
                       ({courses.filter(c => c.department === dept).length})
                     </span>
                   </Badge>
@@ -205,7 +209,7 @@ export default function CoursesPage() {
                 <Badge
                   key={dept}
                   variant="outline"
-                  className="cursor-pointer hover:bg-blue-50 transition-colors"
+                  className="cursor-pointer hover:bg-blue-50"
                   onClick={() => setSelectedDepartment(dept)}
                 >
                   {dept}
