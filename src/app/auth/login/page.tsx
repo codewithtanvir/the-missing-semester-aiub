@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { BookOpen, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function StudentAuthPage() {
+function LoginContent() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -134,5 +134,13 @@ export default function StudentAuthPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function StudentAuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-center">Loading...</div></div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
