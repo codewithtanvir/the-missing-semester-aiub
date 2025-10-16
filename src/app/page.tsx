@@ -172,26 +172,14 @@ export default function HomePage() {
                   </Link>
                 </>
               ) : (
-                <>
-                  <Link href="/courses" className="w-full sm:w-auto">
-                    <Button 
-                      size="lg" 
-                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl hover:shadow-white/20 transition-all duration-300 font-medium"
-                    >
-                      My Courses
-                    </Button>
-                  </Link>
-                  <Link href="/admin/dashboard" className="w-full sm:w-auto">
-                    <Button 
-                      size="lg" 
-                      variant="outline" 
-                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-transparent hover:bg-white/10 text-white border-2 border-white/40 hover:border-white rounded-full backdrop-blur-md transition-all duration-300 font-medium"
-                    >
-                      Dashboard
-                      <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                    </Button>
-                  </Link>
-                </>
+                <Link href="/courses" className="w-full sm:w-auto">
+                  <Button 
+                    size="lg" 
+                    className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl hover:shadow-white/20 transition-all duration-300 font-medium"
+                  >
+                    My Courses
+                  </Button>
+                </Link>
               )}
             </div>
           </div>
