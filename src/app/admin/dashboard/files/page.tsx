@@ -283,36 +283,36 @@ export default function FilesManagementPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">File Management</h2>
-          <p className="text-gray-600 mt-1">Upload, manage, and organize course files</p>
+          <h2 className="text-6xl font-extralight text-neutral-900 tracking-tight">Files</h2>
+          <p className="text-neutral-500 mt-3 font-light">Upload, manage, and organize course files</p>
         </div>
         <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
-              <Upload className="h-4 w-4 mr-2" />
+            <button className="px-8 py-4 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 flex items-center gap-2 font-light shadow-lg hover:shadow-xl">
+              <Upload className="h-5 w-5" />
               Upload Files
-            </Button>
+            </button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>Upload Files</DialogTitle>
-              <DialogDescription>
+          <DialogContent className="sm:max-w-[540px] max-h-[90vh] overflow-y-auto rounded-2xl p-6 sm:p-8">
+            <DialogHeader className="mb-6">
+              <DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight">Upload Files</DialogTitle>
+              <DialogDescription className="text-sm sm:text-base text-muted-foreground mt-2">
                 Upload one or multiple files to course resources. Select multiple files by holding Ctrl/Cmd.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleUpload}>
-              <div className="space-y-4 py-4">
+              <div className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="upload-course">Course</Label>
+                  <Label htmlFor="upload-course" className="text-sm font-medium">Course</Label>
                   <select
                     id="upload-course"
                     value={uploadCourse}
                     onChange={(e) => setUploadCourse(e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition"
                     required
                   >
                     <option value="">Select a course</option>
@@ -325,12 +325,12 @@ export default function FilesManagementPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="upload-category">Category</Label>
+                  <Label htmlFor="upload-category" className="text-sm font-medium">Category</Label>
                   <select
                     id="upload-category"
                     value={uploadCategory}
                     onChange={(e) => setUploadCategory(e.target.value as Category)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition"
                     required
                   >
                     <option value="Midterm">Midterm</option>
@@ -341,7 +341,7 @@ export default function FilesManagementPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="upload-file">Files (Multiple Selection Supported)</Label>
+                  <Label htmlFor="upload-file" className="text-sm font-medium">Files (Multiple Selection Supported)</Label>
                   <Input
                     id="upload-file"
                     type="file"
@@ -350,147 +350,169 @@ export default function FilesManagementPage() {
                       const files = Array.from(e.target.files || []);
                       setUploadFiles(files);
                     }}
+                    className="h-12 rounded-xl text-sm sm:text-base cursor-pointer file:mr-3 file:py-1.5 file:px-3 sm:file:py-2 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition"
                     required
                   />
                   {uploadFiles.length > 0 && (
-                    <div className="mt-2 space-y-1">
-                      <p className="text-sm font-medium text-gray-700">
-                        Selected {uploadFiles.length} file{uploadFiles.length > 1 ? 's' : ''}:
-                      </p>
-                      <div className="max-h-32 overflow-y-auto space-y-1">
+                    <div className="mt-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium">
+                          Selected {uploadFiles.length} file{uploadFiles.length > 1 ? 's' : ''}
+                        </p>
+                        <p className="text-xs text-primary font-medium">
+                          {formatFileSize(uploadFiles.reduce((sum, f) => sum + f.size, 0))}
+                        </p>
+                      </div>
+                      <div className="max-h-40 sm:max-h-48 overflow-y-auto overflow-x-hidden space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
                         {uploadFiles.map((file, index) => (
-                          <div key={index} className="text-xs text-gray-600 flex items-center justify-between bg-gray-50 px-2 py-1 rounded">
-                            <span className="truncate flex-1">{file.name}</span>
-                            <span className="ml-2 text-gray-500">({formatFileSize(file.size)})</span>
+                          <div key={index} className="text-xs sm:text-sm flex items-start sm:items-center justify-between gap-2 bg-muted px-3 py-2 rounded-lg">
+                            <span className="truncate flex-1 min-w-0 break-all sm:break-normal">{file.name}</span>
+                            <span className="shrink-0 text-muted-foreground text-xs whitespace-nowrap">
+                              {formatFileSize(file.size)}
+                            </span>
                           </div>
                         ))}
                       </div>
-                      <p className="text-xs text-blue-600 font-medium">
-                        Total size: {formatFileSize(uploadFiles.reduce((sum, f) => sum + f.size, 0))}
-                      </p>
                     </div>
                   )}
                 </div>
 
-                <div className="space-y-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
-                  <p className="text-sm font-medium text-blue-900">📝 Auto-naming</p>
-                  <p className="text-xs text-blue-700">
+                <div className="space-y-2 bg-primary/5 p-3 sm:p-4 rounded-xl border border-primary/10">
+                  <p className="text-xs sm:text-sm font-semibold flex items-center gap-2">
+                    <span>📝</span> Auto-naming
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     File titles will be automatically generated from filenames. 
                     Make sure your files have descriptive names before uploading.
                   </p>
                 </div>
               </div>
-              <DialogFooter>
-                <Button type="submit" disabled={uploading || uploadFiles.length === 0}>
+              <div className="mt-6 sm:mt-8 flex justify-end gap-3">
+                <button 
+                  type="button"
+                  onClick={() => setUploadDialogOpen(false)}
+                  className="rounded-full border border-input bg-background text-foreground px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium hover:bg-muted transition"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={uploading || uploadFiles.length === 0}
+                  className="rounded-full bg-primary text-white px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-semibold shadow hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   {uploading ? (
                     <>
                       Uploading {uploadProgress.current}/{uploadProgress.total}...
                     </>
                   ) : (
-                    `Upload ${uploadFiles.length > 0 ? `${uploadFiles.length} File${uploadFiles.length > 1 ? 's' : ''}` : ''}`
+                    `Upload${uploadFiles.length > 0 ? ` ${uploadFiles.length} File${uploadFiles.length > 1 ? 's' : ''}` : ''}`
                   )}
-                </Button>
-              </DialogFooter>
+                </button>
+              </div>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
       {/* Filters */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search files..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div>
-              <select
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <option value="all">All Courses</option>
-                {courses.map((course) => (
-                  <option key={course.code} value={course.code}>
-                    {course.code}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <option value="all">All Categories</option>
-                <option value="Midterm">Midterm</option>
-                <option value="Final">Final</option>
-                <option value="Solutions">Solutions</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
+      <div className="rounded-2xl border border-neutral-100 bg-white p-8">
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="Search files..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-full border border-neutral-200 focus:border-neutral-900 focus:outline-none transition-all duration-300 font-light"
+            />
           </div>
-        </CardContent>
-      </Card>
+          <div>
+            <select
+              value={selectedCourse}
+              onChange={(e) => setSelectedCourse(e.target.value)}
+              className="w-full px-4 py-3 rounded-full border border-neutral-200 focus:border-neutral-900 focus:outline-none transition-all duration-300 font-light bg-white"
+            >
+              <option value="all">All Courses</option>
+              {courses.map((course) => (
+                <option key={course.code} value={course.code}>
+                  {course.code}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-4 py-3 rounded-full border border-neutral-200 focus:border-neutral-900 focus:outline-none transition-all duration-300 font-light bg-white"
+            >
+              <option value="all">All Categories</option>
+              <option value="Midterm">Midterm</option>
+              <option value="Final">Final</option>
+              <option value="Solutions">Solutions</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       {/* Files Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Files ({filteredFiles.length})</CardTitle>
-          <CardDescription>All uploaded course resources</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+        <div className="p-8 border-b border-neutral-100">
+          <h3 className="text-2xl font-light text-neutral-900">Files <span className="text-neutral-400">({filteredFiles.length})</span></h3>
+          <p className="text-neutral-500 mt-1 font-light text-sm">All uploaded course resources</p>
+        </div>
+        <div className="p-8">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="text-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-neutral-200 border-t-neutral-900 mx-auto"></div>
             </div>
           ) : filteredFiles.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No files found</p>
+            <div className="text-center py-20">
+              <div className="w-20 h-20 rounded-2xl bg-neutral-50 flex items-center justify-center mx-auto mb-4">
+                <FileText className="h-10 w-10 text-neutral-400" />
+              </div>
+              <p className="text-neutral-500 font-light">No files found</p>
             </div>
           ) : (
-            <div className="overflow-x-auto -mx-6 sm:-mx-0">
-              <div className="inline-block min-w-full align-middle">
+            <div className="overflow-x-auto -mx-8">
+              <div className="inline-block min-w-full align-middle px-8">
                 <div className="overflow-hidden">
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead className="whitespace-nowrap">Title</TableHead>
-                        <TableHead className="whitespace-nowrap">Course</TableHead>
-                        <TableHead className="whitespace-nowrap">Category</TableHead>
-                        <TableHead className="whitespace-nowrap">Size</TableHead>
-                        <TableHead className="whitespace-nowrap">Date</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
+                      <TableRow className="border-neutral-100 hover:bg-transparent">
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Title</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Course</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Category</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Size</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Date</TableHead>
+                        <TableHead className="text-right whitespace-nowrap font-light text-neutral-500">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredFiles.map((file) => (
-                        <TableRow key={file.id}>
-                          <TableCell className="font-medium whitespace-nowrap">{file.title}</TableCell>
-                          <TableCell className="whitespace-nowrap">{file.courses?.code || 'N/A'}</TableCell>
-                          <TableCell className="whitespace-nowrap">{getCategoryBadge(file.category)}</TableCell>
-                          <TableCell className="whitespace-nowrap">{formatFileSize(file.file_size)}</TableCell>
-                          <TableCell className="whitespace-nowrap">{formatDate(file.created_at)}</TableCell>
+                        <TableRow key={file.id} className="border-neutral-100 hover:bg-neutral-50 transition-colors duration-200">
+                          <TableCell className="font-medium whitespace-nowrap text-neutral-900">{file.title}</TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-700">{file.courses?.code || 'N/A'}</TableCell>
+                          <TableCell className="whitespace-nowrap">
+                            <span className="px-3 py-1 rounded-full bg-neutral-50 text-neutral-700 text-sm font-light border border-neutral-200">
+                              {file.category}
+                            </span>
+                          </TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-600">{formatFileSize(file.file_size)}</TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-600">{formatDate(file.created_at)}</TableCell>
                           <TableCell className="text-right whitespace-nowrap">
                             <div className="flex items-center justify-end gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
+                              <button
                                 onClick={() => {
                                   setFileToDelete(file.id);
                                   setDeleteDialogOpen(true);
                                 }}
+                                className="p-2 rounded-full hover:bg-red-50 transition-colors duration-200"
                               >
                                 <Trash2 className="h-4 w-4 text-red-600" />
-                              </Button>
+                              </button>
                             </div>
                           </TableCell>
                         </TableRow>
@@ -501,8 +523,8 @@ export default function FilesManagementPage() {
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

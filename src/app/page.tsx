@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, ArrowRight, FileText, Download, Clock, Users, BookMarked, Star, Play, Pause } from "lucide-react";
+import { BookOpen, ArrowRight, FileText, Download, Sparkles, Zap, Shield, Play, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/navigation";
 import { BackToTop } from "@/components/back-to-top";
@@ -85,12 +85,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] overflow-hidden flex-1">
-        {/* Slideshow Background Images - Full Width */}
+      {/* Hero Section - Ultra Minimal */}
+      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] overflow-hidden flex items-center">
+        {/* Slideshow Background */}
         <div className="absolute inset-0 w-full h-full">
           {BANNER_IMAGES.map((image, index) => (
             <div
@@ -105,212 +105,239 @@ export default function HomePage() {
                 fill
                 className="object-cover"
                 priority={index === 0}
-                quality={90}
+                quality={95}
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/50 via-neutral-900/30 to-neutral-50" />
+          {/* Elegant gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
         </div>
 
-        {/* Content Container */}
-        <div className="relative container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24 lg:py-32 min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] flex flex-col justify-center">
+        {/* Content */}
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-12 z-10 min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-center">
           {/* Slideshow Controls */}
-          <div className="absolute top-6 right-6 z-20 flex gap-2">
+          <div className="absolute top-4 sm:top-8 right-4 sm:right-8 flex gap-2 sm:gap-3">
             <button
               onClick={togglePause}
-              className="bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white p-2 rounded-full transition-all"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-2 sm:p-3 rounded-full transition-all duration-300"
               aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
             >
-              {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+              {isPaused ? <Play className="h-3 w-3 sm:h-4 sm:w-4" /> : <Pause className="h-3 w-3 sm:h-4 sm:w-4" />}
             </button>
           </div>
 
+          {/* Main Content */}
+          <div className="max-w-5xl mx-auto text-center space-y-6 sm:space-y-8 pb-12 sm:pb-16 px-4">
+            {/* Eyebrow text */}
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+              <span className="text-xs sm:text-sm font-medium text-white">AIUB Course Resources Platform</span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-light text-white leading-none tracking-tight">
+              Missing
+              <br />
+              <span className="font-extralight text-neutral-200">Semester</span>
+            </h1>
+            
+            {/* Subheadline */}
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed px-4">
+              Everything you need to excel,
+              <br className="hidden sm:block" />
+              <span className="text-white/70">all in one place</span>
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2 sm:pt-4 px-4">
+              {!isAuthenticated ? (
+                <>
+                  <Link href="/auth/login" className="w-full sm:w-auto">
+                    <Button 
+                      size="lg" 
+                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl hover:shadow-white/20 transition-all duration-300 font-medium"
+                    >
+                      Get Started
+                    </Button>
+                  </Link>
+                  <Link href="/courses" className="w-full sm:w-auto">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-transparent hover:bg-white/10 text-white border-2 border-white/40 hover:border-white rounded-full backdrop-blur-md transition-all duration-300 font-medium"
+                    >
+                      Explore Courses
+                      <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/courses" className="w-full sm:w-auto">
+                    <Button 
+                      size="lg" 
+                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl hover:shadow-white/20 transition-all duration-300 font-medium"
+                    >
+                      My Courses
+                    </Button>
+                  </Link>
+                  <Link href="/admin/dashboard" className="w-full sm:w-auto">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="w-full sm:min-w-[200px] h-12 sm:h-14 text-base sm:text-lg bg-transparent hover:bg-white/10 text-white border-2 border-white/40 hover:border-white rounded-full backdrop-blur-md transition-all duration-300 font-medium"
+                    >
+                      Dashboard
+                      <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+
           {/* Slideshow Indicators */}
-          <div className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
             {BANNER_IMAGES.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentBanner(index)}
-                className={`h-2 rounded-full transition-all ${
+                className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
                   index === currentBanner 
-                    ? 'bg-white w-8' 
-                    : 'bg-white/50 hover:bg-white/75 w-2'
+                    ? 'bg-white w-8 sm:w-12' 
+                    : 'bg-white/40 hover:bg-white/60 w-1 sm:w-1.5'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
-
-        <div className="max-w-4xl mx-auto text-center relative z-10 pb-12 sm:pb-16 md:pb-20">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 sm:mb-6 leading-tight drop-shadow-2xl px-4 sm:px-6">
-            <span className="text-lime-400 bg-black/10 px-2 rounded">Missing Semester</span>
-            <br />
-            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">of AIUB</span>
-          </h1>
-          
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow-lg px-4 sm:px-6 bg-black/10 py-3 rounded-lg backdrop-blur-sm">
-            Your comprehensive platform for AIUB computer science course materials, lecture notes, and study resources — all in one place.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-6">
-            {!isAuthenticated ? (
-              <>
-                <Link href="/auth/login" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto text-base px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 border-2 border-white shadow-xl hover:shadow-2xl transition-all font-semibold hover:scale-105">
-                    Get Started Free
-                  </Button>
-                </Link>
-                <Link href="/courses" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto text-base px-8 py-4 bg-white/20 hover:bg-white/30 text-white border-2 border-white shadow-xl hover:shadow-2xl transition-all backdrop-blur-md font-semibold">
-                    Browse Courses
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/courses" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto text-base px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 border-2 border-white shadow-xl hover:shadow-2xl transition-all font-semibold hover:scale-105">
-                    Go to My Courses
-                  </Button>
-                </Link>
-                <Link href="/admin/dashboard" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto text-base px-8 py-4 bg-white/20 hover:bg-white/30 text-white border-2 border-white shadow-xl hover:shadow-2xl transition-all backdrop-blur-md font-semibold">
-                    Dashboard
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-              Everything You Need to Excel
+      {/* Stats Section - Minimal */}
+      <section className="py-16 sm:py-20 md:py-24 bg-neutral-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 md:gap-12 max-w-5xl mx-auto">
+            <div className="text-center space-y-2">
+              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900">{courseStats.files}</div>
+              <div className="text-xs sm:text-sm font-medium text-neutral-500 uppercase tracking-widest">Resources</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900">{courseStats.courses}</div>
+              <div className="text-xs sm:text-sm font-medium text-neutral-500 uppercase tracking-widest">Courses</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900">1K+</div>
+              <div className="text-sm font-medium text-neutral-500 uppercase tracking-widest">Students</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-6xl md:text-7xl font-extralight text-neutral-900">24/7</div>
+              <div className="text-sm font-medium text-neutral-500 uppercase tracking-widest">Access</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section - Ultra Minimal */}
+      <section className="py-32 bg-white">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+          {/* Section Header */}
+          <div className="text-center mb-20 max-w-3xl mx-auto">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900 mb-6 leading-tight">
+              Built for
+              <br />
+              <span className="font-light">Excellence</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Access comprehensive study materials designed specifically for AIUB students
+            <p className="text-xl text-neutral-500 font-light">
+              Everything designed to help you succeed
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Feature 1 */}
-            <div className="text-center p-6 rounded-2xl border-2 border-gray-100 hover:border-blue-500 hover:shadow-xl transition-all group bg-gradient-to-b from-white to-gray-50">
-              <div className="bg-blue-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
+            <div className="group text-center space-y-6 p-8 rounded-3xl hover:bg-neutral-50 transition-all duration-500">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                 <FileText className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Course Materials</h3>
-              <p className="text-gray-600 leading-relaxed">Access lecture notes, slides, and comprehensive study guides for all your courses</p>
+              <h3 className="text-2xl font-light text-neutral-900">Comprehensive</h3>
+              <p className="text-neutral-500 leading-relaxed font-light">
+                Access complete lecture notes, slides, and study guides for all courses
+              </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="text-center p-6 rounded-2xl border-2 border-gray-100 hover:border-blue-500 hover:shadow-xl transition-all group bg-gradient-to-b from-white to-gray-50">
-              <div className="bg-emerald-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                <BookMarked className="h-8 w-8 text-white" />
+            <div className="group text-center space-y-6 p-8 rounded-3xl hover:bg-neutral-50 transition-all duration-500">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                <Zap className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Organized by Course</h3>
-              <p className="text-gray-600 leading-relaxed">Find materials easily organized by course code and semester</p>
+              <h3 className="text-2xl font-light text-neutral-900">Instant Access</h3>
+              <p className="text-neutral-500 leading-relaxed font-light">
+                Find and download materials instantly, organized by course code
+              </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="text-center p-6 rounded-2xl border-2 border-gray-100 hover:border-blue-500 hover:shadow-xl transition-all group bg-gradient-to-b from-white to-gray-50">
-              <div className="bg-amber-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                <Download className="h-8 w-8 text-white" />
+            <div className="group text-center space-y-6 p-8 rounded-3xl hover:bg-neutral-50 transition-all duration-500">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-neutral-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                <Shield className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Download Anytime</h3>
-              <p className="text-gray-600 leading-relaxed">Save resources for offline access and study on the go</p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="text-center p-6 rounded-2xl border-2 border-gray-100 hover:border-blue-500 hover:shadow-xl transition-all group bg-gradient-to-b from-white to-gray-50">
-              <div className="bg-purple-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                <Clock className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">24/7 Access</h3>
-              <p className="text-gray-600 leading-relaxed">Study anytime, anywhere with round-the-clock access to all resources</p>
+              <h3 className="text-2xl font-light text-neutral-900">Always Available</h3>
+              <p className="text-neutral-500 leading-relaxed font-light">
+                24/7 access to all resources, study anytime, anywhere
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-extrabold mb-2">{courseStats.files}+</div>
-              <div className="text-blue-100 text-sm md:text-base font-medium">Resources</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-extrabold mb-2">{courseStats.courses}+</div>
-              <div className="text-blue-100 text-sm md:text-base font-medium">Courses</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-extrabold mb-2">1K+</div>
-              <div className="text-blue-100 text-sm md:text-base font-medium">Students</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-extrabold mb-2">24/7</div>
-              <div className="text-blue-100 text-sm md:text-base font-medium">Access</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-              Get Started in 3 Simple Steps
+      {/* How It Works - Minimal */}
+      <section className="py-32 bg-neutral-50">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center mb-20 max-w-3xl mx-auto">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-neutral-900 mb-6 leading-tight">
+              Three Simple
+              <br />
+              <span className="font-light">Steps</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Join thousands of AIUB students accessing quality resources
-            </p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
+          <div className="max-w-3xl mx-auto space-y-6">
             {/* Step 1 */}
-            <div className="flex flex-col sm:flex-row gap-6 items-start bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center font-extrabold text-2xl shrink-0 shadow-lg">
-                1
+            <div className="group flex items-start gap-8 p-8 bg-white rounded-3xl hover:shadow-xl transition-all duration-500">
+              <div className="text-7xl font-extralight text-neutral-200 group-hover:text-neutral-900 transition-colors duration-500">
+                01
               </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900">Sign Up Free</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Create your account using Google authentication. Quick, secure, and hassle-free — no email verification required.
+              <div className="flex-1 pt-3">
+                <h3 className="text-2xl font-light text-neutral-900 mb-3">Sign Up</h3>
+                <p className="text-neutral-500 leading-relaxed font-light">
+                  Quick and secure Google authentication
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="flex flex-col sm:flex-row gap-6 items-start bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="bg-emerald-500 text-white w-16 h-16 rounded-full flex items-center justify-center font-extrabold text-2xl shrink-0 shadow-lg">
-                2
+            <div className="group flex items-start gap-8 p-8 bg-white rounded-3xl hover:shadow-xl transition-all duration-500">
+              <div className="text-7xl font-extralight text-neutral-200 group-hover:text-neutral-900 transition-colors duration-500">
+                02
               </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900">Browse Courses</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Find your courses by code or name. Browse through organized categories and discover all available study materials.
+              <div className="flex-1 pt-3">
+                <h3 className="text-2xl font-light text-neutral-900 mb-3">Find Courses</h3>
+                <p className="text-neutral-500 leading-relaxed font-light">
+                  Browse organized materials by course code
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="flex flex-col sm:flex-row gap-6 items-start bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="bg-amber-500 text-white w-16 h-16 rounded-full flex items-center justify-center font-extrabold text-2xl shrink-0 shadow-lg">
-                3
+            <div className="group flex items-start gap-8 p-8 bg-white rounded-3xl hover:shadow-xl transition-all duration-500">
+              <div className="text-7xl font-extralight text-neutral-200 group-hover:text-neutral-900 transition-colors duration-500">
+                03
               </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900">Download & Study</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Access lecture notes, slides, and resources. Download materials for offline study and ace your exams!
+              <div className="flex-1 pt-3">
+                <h3 className="text-2xl font-light text-neutral-900 mb-3">Start Learning</h3>
+                <p className="text-neutral-500 leading-relaxed font-light">
+                  Download resources and ace your exams
                 </p>
               </div>
             </div>
@@ -318,87 +345,97 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px'}}></div>
-        </div>
+      {/* Final CTA - Minimal */}
+      <section className="py-32 bg-neutral-900 text-white relative overflow-hidden">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px'}}></div>
 
-        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 md:mb-6">
-            Ready to Start Learning?
-          </h2>
-          <p className="text-xl md:text-2xl mb-8 md:mb-10 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Join thousands of AIUB students who are already accessing quality course materials and excelling in their studies
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {!isAuthenticated ? (
-              <>
-                <Link href="/auth/login">
-                  <Button size="lg" className="w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 bg-white text-blue-600 hover:bg-gray-100 shadow-2xl hover:shadow-3xl transition-all font-bold hover:scale-105">
-                    Get Started Free
-                  </Button>
-                </Link>
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10">
+          <div className="max-w-4xl mx-auto space-y-12">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight leading-tight">
+              Ready to start
+              <br />
+              <span className="font-light text-white/80">your journey?</span>
+            </h2>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              {!isAuthenticated ? (
+                <>
+                  <Link href="/auth/login">
+                    <Button 
+                      size="lg" 
+                      className="min-w-[200px] h-14 text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl transition-all duration-300 font-medium"
+                    >
+                      Get Started
+                    </Button>
+                  </Link>
+                  <Link href="/courses">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="min-w-[200px] h-14 text-lg bg-transparent hover:bg-white/10 text-white border-2 border-white/40 hover:border-white rounded-full transition-all duration-300 font-medium"
+                    >
+                      Explore Courses
+                    </Button>
+                  </Link>
+                </>
+              ) : (
                 <Link href="/courses">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 border-2 border-white text-white hover:bg-white/10 shadow-2xl transition-all font-bold">
-                    Browse Courses
+                  <Button 
+                    size="lg" 
+                    className="min-w-[200px] h-14 text-lg bg-white hover:bg-neutral-100 text-neutral-900 rounded-full shadow-2xl transition-all duration-300 font-medium"
+                  >
+                    Go to Courses
                   </Button>
                 </Link>
-              </>
-            ) : (
-              <Link href="/courses">
-                <Button size="lg" className="w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 bg-white text-blue-600 hover:bg-gray-100 shadow-2xl hover:shadow-3xl transition-all font-bold hover:scale-105">
-                  Go to My Courses
-                </Button>
-              </Link>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-white">
-        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12">
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
-            {/* Logo and Description */}
-            <div className="text-center md:text-left">
-              <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
-                <div className="rounded-lg bg-blue-500 p-2 shrink-0">
-                  <BookOpen className="h-6 w-6 text-white" />
+      {/* Footer - Minimal */}
+      <footer className="border-t border-neutral-200 bg-white">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12 py-16">
+          <div className="grid md:grid-cols-3 gap-12 mb-12">
+            {/* Brand */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="rounded-xl bg-neutral-900 p-2">
+                  <BookOpen className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <div className="font-bold text-neutral-800 text-lg leading-tight">Missing Semester</div>
-                  <div className="text-xs text-gray-500">Essential Learning Resources</div>
+                  <div className="font-medium text-neutral-900">Missing Semester</div>
+                  <div className="text-xs text-neutral-500">AIUB Resources</div>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                Your comprehensive platform for AIUB computer science course materials and study resources.
+              <p className="text-sm text-neutral-500 font-light leading-relaxed">
+                Comprehensive course materials for AIUB computer science students
               </p>
             </div>
 
             {/* Quick Links */}
-            <div className="text-center md:text-left">
-              <h3 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
-              <ul className="space-y-2 text-sm">
+            <div>
+              <h3 className="font-medium text-neutral-900 mb-4 text-sm uppercase tracking-widest">Navigate</h3>
+              <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/courses" className="text-gray-600 hover:text-blue-500 transition-colors">
-                    Browse Courses
+                  <Link href="/courses" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    Courses
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="text-gray-600 hover:text-blue-500 transition-colors">
-                    About Us
+                  <Link href="/about" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    About
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="text-gray-600 hover:text-blue-500 transition-colors">
+                  <Link href="/contact" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
                     Contact
                   </Link>
                 </li>
                 {isAuthenticated && (
                   <li>
-                    <Link href="/admin/dashboard" className="text-gray-600 hover:text-blue-500 transition-colors">
+                    <Link href="/admin/dashboard" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
                       Dashboard
                     </Link>
                   </li>
@@ -406,37 +443,59 @@ export default function HomePage() {
               </ul>
             </div>
 
-            {/* Legal Links */}
-            <div className="text-center md:text-left">
-              <h3 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">Legal</h3>
-              <ul className="space-y-2 text-sm">
+            {/* Legal */}
+            <div>
+              <h3 className="font-medium text-neutral-900 mb-4 text-sm uppercase tracking-widest">Legal</h3>
+              <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/privacy" className="text-gray-600 hover:text-blue-500 transition-colors">
-                    Privacy Policy
+                  <Link href="/privacy" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    Privacy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="text-gray-600 hover:text-blue-500 transition-colors">
-                    Terms of Service
+                  <Link href="/terms" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    Terms
                   </Link>
                 </li>
                 <li>
-                  <Link href="/help" className="text-gray-600 hover:text-blue-500 transition-colors">
-                    Help Center
+                  <Link href="/help" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    Help
                   </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Community */}
+            <div>
+              <h3 className="font-medium text-neutral-900 mb-4 text-sm uppercase tracking-widest">Community</h3>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <Link href="/contributors" className="text-neutral-500 hover:text-neutral-900 transition-colors font-light">
+                    Contributors
+                  </Link>
+                </li>
+                <li>
+                  <a 
+                    href="https://github.com/codewithtanvir/the-missing-semester-aiub" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-500 hover:text-neutral-900 transition-colors font-light"
+                  >
+                    GitHub
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* Bottom Bar */}
-          <div className="pt-6 border-t border-gray-200">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-              <p className="text-center md:text-left">
-                © {new Date().getFullYear()} Missing Semester. All rights reserved.
+          {/* Bottom */}
+          <div className="pt-8 border-t border-neutral-200">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+              <p className="font-light">
+                © {new Date().getFullYear()} Missing Semester
               </p>
-              <p className="text-center md:text-right text-xs">
-                Made with ❤️ for AIUB Students
+              <p className="text-xs font-light">
+                Made for AIUB Students
               </p>
             </div>
           </div>

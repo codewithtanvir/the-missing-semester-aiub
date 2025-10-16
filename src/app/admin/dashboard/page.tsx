@@ -126,160 +126,172 @@ export default function AdminDashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="w-16 h-16 border-2 border-neutral-200 border-t-neutral-900 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Welcome Section */}
-      <div>
-        <h2 className="text-3xl font-bold text-gray-900">Dashboard Overview</h2>
-        <p className="text-gray-600 mt-1">Monitor your course resources and system activity</p>
+      <div className="space-y-3">
+        <h2 className="text-6xl font-extralight text-neutral-900">Dashboard</h2>
+        <p className="text-xl text-neutral-500 font-light">Monitor your system activity</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Files</CardTitle>
-            <Files className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalFiles}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Uploaded resources
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Files className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-5xl font-extralight text-neutral-900">{stats.totalFiles}</div>
+            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Total Files</p>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalCourses}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Active courses
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BookOpen className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-5xl font-extralight text-neutral-900">{stats.totalCourses}</div>
+            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Courses</p>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Recent Uploads</CardTitle>
-            <TrendingUp className="h-4 w-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.recentUploads}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Last 7 days
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-5xl font-extralight text-neutral-900">{stats.recentUploads}</div>
+            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Recent (7d)</p>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Storage Used</CardTitle>
-            <Download className="h-4 w-4 text-orange-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">--</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Total storage
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Download className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-5xl font-extralight text-neutral-900">--</div>
+            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Storage</p>
+          </div>
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Common administrative tasks</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Link href="/admin/dashboard/files">
-              <Button variant="outline" className="w-full h-auto flex flex-col items-center gap-2 py-4">
-                <Upload className="h-6 w-6 text-blue-600" />
-                <span className="font-medium">Upload File</span>
-              </Button>
-            </Link>
-            <Link href="/admin/dashboard/courses">
-              <Button variant="outline" className="w-full h-auto flex flex-col items-center gap-2 py-4">
-                <BookOpen className="h-6 w-6 text-green-600" />
-                <span className="font-medium">Manage Courses</span>
-              </Button>
-            </Link>
-            <Link href="/admin/dashboard/analytics">
-              <Button variant="outline" className="w-full h-auto flex flex-col items-center gap-2 py-4">
-                <TrendingUp className="h-6 w-6 text-purple-600" />
-                <span className="font-medium">View Analytics</span>
-              </Button>
-            </Link>
-            <Link href="/admin/dashboard/settings">
-              <Button variant="outline" className="w-full h-auto flex flex-col items-center gap-2 py-4">
-                <Users className="h-6 w-6 text-orange-600" />
-                <span className="font-medium">Settings</span>
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-white border border-neutral-100 rounded-2xl p-8">
+        <div className="mb-8 space-y-2">
+          <h3 className="text-3xl font-light text-neutral-900">Quick Actions</h3>
+          <p className="text-neutral-500 font-light">Common administrative tasks</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Link href="/admin/dashboard/files">
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-4 text-center">
+                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <Upload className="h-7 w-7 text-white" />
+                </div>
+                <span className="font-light text-neutral-900">Upload File</span>
+              </div>
+            </button>
+          </Link>
+          <Link href="/admin/dashboard/courses">
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-4 text-center">
+                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <BookOpen className="h-7 w-7 text-white" />
+                </div>
+                <span className="font-light text-neutral-900">Manage Courses</span>
+              </div>
+            </button>
+          </Link>
+          <Link href="/admin/dashboard/analytics">
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-4 text-center">
+                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <TrendingUp className="h-7 w-7 text-white" />
+                </div>
+                <span className="font-light text-neutral-900">View Analytics</span>
+              </div>
+            </button>
+          </Link>
+          <Link href="/admin/dashboard/settings">
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-4 text-center">
+                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <Users className="h-7 w-7 text-white" />
+                </div>
+                <span className="font-light text-neutral-900">Settings</span>
+              </div>
+            </button>
+          </Link>
+        </div>
+      </div>
 
       {/* Recent Files */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Uploads</CardTitle>
-          <CardDescription>Latest files added to the system</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {recentFiles.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No files uploaded yet</p>
-              <Link href="/admin/dashboard/files">
-                <Button variant="link" className="mt-2">Upload your first file</Button>
-              </Link>
+      <div className="bg-white border border-neutral-100 rounded-2xl p-8">
+        <div className="mb-8 space-y-2">
+          <h3 className="text-3xl font-light text-neutral-900">Recent Uploads</h3>
+          <p className="text-neutral-500 font-light">Latest files added to the system</p>
+        </div>
+        {recentFiles.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-neutral-50 flex items-center justify-center mb-6">
+              <FileText className="h-10 w-10 text-neutral-300" />
             </div>
-          ) : (
-            <div className="space-y-3">
-              {recentFiles.map((file) => (
-                <div
-                  key={file.id}
-                  className="flex items-center justify-between p-3 rounded-lg border bg-white hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <FileText className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm text-gray-900 truncate">
-                        {file.title}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {file.course_code} • {file.category}
-                      </p>
-                    </div>
+            <p className="text-neutral-500 font-light mb-6">No files uploaded yet</p>
+            <Link href="/admin/dashboard/files">
+              <button className="px-6 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-medium">
+                Upload your first file
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {recentFiles.map((file) => (
+              <div
+                key={file.id}
+                className="flex items-center justify-between p-5 rounded-2xl border border-neutral-100 bg-white hover:bg-neutral-50 hover:shadow-md transition-all duration-300"
+              >
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="h-12 w-12 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0">
+                    <FileText className="h-6 w-6 text-neutral-900" />
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <div className="hidden sm:flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {formatDate(file.created_at)}
-                    </div>
-                    <div className="text-right">
-                      {formatFileSize(file.file_size)}
-                    </div>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <p className="font-light text-neutral-900 truncate">
+                      {file.title}
+                    </p>
+                    <p className="text-sm text-neutral-500 font-light">
+                      {file.course_code} • {file.category}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                <div className="flex items-center gap-6 text-sm text-neutral-500 font-light">
+                  <div className="hidden sm:flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    {formatDate(file.created_at)}
+                  </div>
+                  <div className="text-right font-mono text-xs">
+                    {formatFileSize(file.file_size)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

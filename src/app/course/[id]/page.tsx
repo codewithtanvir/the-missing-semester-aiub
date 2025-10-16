@@ -101,102 +101,101 @@ export default function CoursePage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
-        <Breadcrumb 
-          items={[
-            { label: 'Courses', href: '/courses' },
-            { label: course.code }
-          ]} 
-        />
+      <main className="container mx-auto px-6 sm:px-8 lg:px-12 py-12 max-w-7xl">
+        {/* Breadcrumb */}
+        <div className="mb-12">
+          <Breadcrumb 
+            items={[
+              { label: 'Courses', href: '/courses' },
+              { label: course.code }
+            ]} 
+          />
+        </div>
 
-        {/* Course Header Card */}
-        <div className="border border-neutral-200 bg-white p-8 mb-12 mt-8">
-          <div className="flex items-start gap-6">
-            {/* Icon */}
-            <div className="w-14 h-14 bg-neutral-900 flex items-center justify-center shrink-0">
-              <BookOpen className="h-7 w-7 text-white" />
+        {/* Course Header - Ultra Minimal */}
+        <div className="mb-20">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            {/* Course Code - Large Display */}
+            <div className="space-y-4">
+              <h1 className="text-7xl md:text-8xl lg:text-9xl font-extralight text-neutral-900 leading-none tracking-tight">
+                {course.code}
+              </h1>
+              <p className="text-2xl md:text-3xl text-neutral-600 font-light">
+                {course.name}
+              </p>
             </div>
             
-            {/* Content */}
-            <div className="flex-1">
-              <div className="flex items-baseline gap-4 mb-2">
-                <h1 className="text-3xl font-light text-neutral-900">
-                  {course.code}
-                </h1>
-                {course.department && (
-                  <span className="px-2 py-0.5 bg-neutral-100 text-neutral-700 text-xs border border-neutral-200">
-                    {course.department}
-                  </span>
-                )}
-              </div>
-              
-              <p className="text-xl text-neutral-700 mb-3 font-light">{course.name}</p>
-              
-              <div className="flex flex-wrap gap-4 text-sm text-neutral-500">
-                {course.instructor && (
-                  <span>{course.instructor}</span>
-                )}
-                {course.semester && (
-                  <>
-                    <span className="text-neutral-300">•</span>
-                    <span>{course.semester}</span>
-                  </>
-                )}
-                {course.credits && (
-                  <>
-                    <span className="text-neutral-300">•</span>
-                    <span>{course.credits} Credits</span>
-                  </>
-                )}
-              </div>
-              
-              {course.description && (
-                <p className="mt-4 text-neutral-600 leading-relaxed">
-                  {course.description}
-                </p>
+            {/* Meta Information */}
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-neutral-500 font-light pt-4">
+              {course.department && (
+                <span className="px-4 py-1.5 bg-neutral-50 text-neutral-700 border border-neutral-200 rounded-full">
+                  {course.department}
+                </span>
+              )}
+              {course.instructor && <span>{course.instructor}</span>}
+              {course.semester && (
+                <>
+                  <span className="text-neutral-300">•</span>
+                  <span>{course.semester}</span>
+                </>
+              )}
+              {course.credits && (
+                <>
+                  <span className="text-neutral-300">•</span>
+                  <span>{course.credits} Credits</span>
+                </>
               )}
             </div>
+            
+            {/* Description */}
+            {course.description && (
+              <p className="text-neutral-500 leading-relaxed max-w-2xl mx-auto pt-6 font-light">
+                {course.description}
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Tabs Navigation */}
+        {/* Tabs Navigation - Minimal */}
         <Tabs defaultValue="Midterm" className="w-full">
-          <div className="border-b border-neutral-200 mb-8 bg-white px-6">
-            <TabsList className="h-auto p-0 bg-transparent space-x-8">
+          {/* Tabs Header */}
+          <div className="flex justify-center mb-16">
+            <TabsList className="inline-flex h-auto p-2 bg-neutral-50 rounded-full border border-neutral-200 space-x-2">
               <TabsTrigger 
                 value="Midterm" 
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+                className="rounded-full px-6 py-3 text-sm font-light data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-md text-neutral-500 transition-all duration-300"
               >
                 Midterm
               </TabsTrigger>
               <TabsTrigger 
                 value="Final"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+                className="rounded-full px-6 py-3 text-sm font-light data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-md text-neutral-500 transition-all duration-300"
               >
                 Final
               </TabsTrigger>
               <TabsTrigger 
                 value="Solutions"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+                className="rounded-full px-6 py-3 text-sm font-light data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-md text-neutral-500 transition-all duration-300"
               >
                 Solutions
               </TabsTrigger>
               <TabsTrigger 
                 value="Others"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+                className="rounded-full px-6 py-3 text-sm font-light data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-md text-neutral-500 transition-all duration-300"
               >
                 Others
               </TabsTrigger>
             </TabsList>
           </div>
 
+          {/* Tabs Content */}
           {(['Midterm', 'Final', 'Solutions', 'Others'] as Category[]).map((category) => (
             <TabsContent key={category} value={category} className="mt-0">
               {files[category].length > 0 ? (
-                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {files[category].map((file) => (
                     <FileCard
                       key={file.id}
@@ -206,9 +205,18 @@ export default function CoursePage() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 bg-white border border-neutral-100">
-                  <FileText className="mx-auto h-12 w-12 text-neutral-200 mb-4" />
-                  <p className="text-neutral-500">No files available for {category}</p>
+                <div className="text-center py-32">
+                  <div className="max-w-md mx-auto space-y-6">
+                    <div className="w-24 h-24 mx-auto rounded-full bg-neutral-50 flex items-center justify-center">
+                      <FileText className="h-12 w-12 text-neutral-300" />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-light text-neutral-900">No files yet</h3>
+                      <p className="text-neutral-500 font-light">
+                        No {category.toLowerCase()} files available for this course
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
             </TabsContent>

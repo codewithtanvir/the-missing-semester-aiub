@@ -2,21 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Megaphone, Trash2, Plus, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { Trash2, Eye, EyeOff } from 'lucide-react';
 
 interface BroadcastMessage {
   id: string;
@@ -24,10 +11,9 @@ interface BroadcastMessage {
   type: 'info' | 'warning' | 'success' | 'error';
   is_active: boolean;
   created_at: string;
-  updated_at: string;
 }
 
-export default function BroadcastManagementPage() {
+export default function BroadcastPage() {
   const [messages, setMessages] = useState<BroadcastMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
@@ -53,7 +39,8 @@ export default function BroadcastManagementPage() {
     setLoading(false);
   };
 
-  const handleCreate = async () => {
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!newMessage.trim()) {
       toast({
         title: 'Error',
@@ -72,10 +59,9 @@ export default function BroadcastManagementPage() {
       } as any);
 
       if (error) {
-        console.error('Broadcast creation error:', error);
         toast({
           title: 'Error',
-          description: error.message || 'Failed to create broadcast message. Please ensure you are logged in as admin.',
+          description: error.message || 'Failed to create broadcast message',
           variant: 'destructive',
         });
       } else {
@@ -88,10 +74,9 @@ export default function BroadcastManagementPage() {
         loadMessages();
       }
     } catch (err: any) {
-      console.error('Unexpected error:', err);
       toast({
         title: 'Error',
-        description: 'An unexpected error occurred. Please try again.',
+        description: 'An unexpected error occurred',
         variant: 'destructive',
       });
     }
@@ -100,17 +85,17 @@ export default function BroadcastManagementPage() {
 
   const handleToggleActive = async (id: string, currentState: boolean) => {
     try {
+      const updateData = { is_active: !currentState };
       const supabaseClient: any = supabase;
       const { error } = await supabaseClient
         .from('broadcast_messages')
-        .update({ is_active: !currentState })
+        .update(updateData)
         .eq('id', id);
 
       if (error) {
-        console.error('Toggle error:', error);
         toast({
           title: 'Error',
-          description: error.message || 'Failed to update message',
+          description: 'Failed to update message',
           variant: 'destructive',
         });
       } else {
@@ -120,8 +105,7 @@ export default function BroadcastManagementPage() {
         });
         loadMessages();
       }
-    } catch (err: any) {
-      console.error('Unexpected error:', err);
+    } catch (err) {
       toast({
         title: 'Error',
         description: 'Failed to update message status',
@@ -155,148 +139,154 @@ export default function BroadcastManagementPage() {
     }
   };
 
-  const getTypeBadge = (type: string) => {
-    const styles = {
-      info: 'bg-blue-100 text-blue-800',
-      warning: 'bg-yellow-100 text-yellow-800',
-      success: 'bg-green-100 text-green-800',
-      error: 'bg-red-100 text-red-800',
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const getTypeColor = (type: string) => {
+    const colors = {
+      info: 'bg-blue-50 text-blue-700 border-blue-200',
+      success: 'bg-green-50 text-green-700 border-green-200',
+      warning: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+      error: 'bg-red-50 text-red-700 border-red-200',
     };
-    return <Badge className={styles[type as keyof typeof styles] || styles.info}>{type}</Badge>;
+    return colors[type as keyof typeof colors] || colors.info;
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="rounded-lg bg-blue-100 p-2">
-          <Megaphone className="h-6 w-6 text-blue-600" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Broadcast Messages</h1>
-          <p className="text-gray-600">Manage announcements shown to all users</p>
-        </div>
-      </div>
+    <main className="max-w-4xl mx-auto">
+      <header className="mb-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">Broadcast</h1>
+        <p className="text-muted-foreground text-lg">Send announcements to all users instantly.</p>
+      </header>
 
       {/* Create New Message */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Plus className="h-5 w-5" />
-            Create New Broadcast
-          </CardTitle>
-          <CardDescription>
-            Create a floating message that will be displayed on the courses page
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="rounded-2xl bg-card shadow-lg p-6 sm:p-8 mb-8">
+        <h2 className="text-2xl font-bold mb-6">Create New Broadcast</h2>
+        <form onSubmit={handleCreate} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
-            <Textarea
-              id="message"
-              placeholder="Enter your broadcast message..."
+            <label className="text-sm font-medium">Message</label>
+            <textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              rows={3}
-              className="resize-none"
+              placeholder="Enter your broadcast message..."
+              className="w-full rounded-xl border border-input bg-background px-4 py-3 text-base min-h-[120px] resize-none focus:outline-none focus:ring-2 focus:ring-primary transition"
+              required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Message Type</Label>
-            <Select value={messageType} onValueChange={(value: any) => setMessageType(value)}>
-              <SelectTrigger id="type">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="info">Info (Blue)</SelectItem>
-                <SelectItem value="success">Success (Green)</SelectItem>
-                <SelectItem value="warning">Warning (Yellow)</SelectItem>
-                <SelectItem value="error">Error (Red)</SelectItem>
-              </SelectContent>
-            </Select>
+            <label className="text-sm font-medium">Message Type</label>
+            <select
+              value={messageType}
+              onChange={(e) => setMessageType(e.target.value as any)}
+              className="w-full rounded-xl border border-input bg-background px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-primary transition"
+            >
+              <option value="info">Info (Blue)</option>
+              <option value="success">Success (Green)</option>
+              <option value="warning">Warning (Yellow)</option>
+              <option value="error">Error (Red)</option>
+            </select>
           </div>
 
-          <Button onClick={handleCreate} disabled={submitting} className="w-full">
-            <Plus className="h-4 w-4 mr-2" />
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full rounded-full bg-primary text-white px-8 py-3 text-base font-semibold shadow hover:bg-primary/90 transition disabled:opacity-50"
+          >
             {submitting ? 'Creating...' : 'Create Broadcast'}
-          </Button>
-        </CardContent>
-      </Card>
+          </button>
+        </form>
+      </div>
 
-      {/* Existing Messages */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Active & Past Broadcasts</CardTitle>
-          <CardDescription>Manage existing broadcast messages</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="text-center py-8 text-gray-500">Loading...</div>
-          ) : messages.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              No broadcast messages yet. Create one above!
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className="border rounded-lg p-4 space-y-3"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center gap-2">
-                        {getTypeBadge(msg.type)}
+      {/* Messages List */}
+      <div className="rounded-2xl bg-card shadow-lg p-6 sm:p-8">
+        <h2 className="text-2xl font-bold mb-6">Active & Past Broadcasts</h2>
+        
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading messages...</p>
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg mb-2">No broadcast messages yet</p>
+            <p className="text-sm text-muted-foreground">Create your first broadcast above!</p>
+          </div>
+        ) : (
+          <ul className="space-y-4">
+            {messages.map((msg) => (
+              <li
+                key={msg.id}
+                className={`rounded-xl p-5 border transition ${getTypeColor(msg.type)}`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <span className="text-xs font-semibold uppercase tracking-wide">
+                        {msg.type}
+                      </span>
+                      <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
+                        msg.is_active 
+                          ? 'bg-green-100 text-green-700' 
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
                         {msg.is_active ? (
-                          <Badge className="bg-green-100 text-green-800">
-                            <Eye className="h-3 w-3 mr-1" />
+                          <>
+                            <Eye className="h-3 w-3" />
                             Active
-                          </Badge>
+                          </>
                         ) : (
-                          <Badge variant="outline" className="text-gray-500">
-                            <EyeOff className="h-3 w-3 mr-1" />
+                          <>
+                            <EyeOff className="h-3 w-3" />
                             Inactive
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-700">{msg.message}</p>
-                      <p className="text-xs text-gray-500">
-                        Created: {new Date(msg.created_at).toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleToggleActive(msg.id, msg.is_active)}
-                      >
-                        {msg.is_active ? (
-                          <>
-                            <EyeOff className="h-4 w-4 mr-1" />
-                            Deactivate
-                          </>
-                        ) : (
-                          <>
-                            <Eye className="h-4 w-4 mr-1" />
-                            Activate
                           </>
                         )}
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(msg.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      </span>
                     </div>
+                    <p className="text-base sm:text-lg mb-2 break-words">{msg.message}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Created {formatDate(msg.created_at)}
+                    </p>
+                  </div>
+                  
+                  <div className="flex gap-2 shrink-0">
+                    <button
+                      onClick={() => handleToggleActive(msg.id, msg.is_active)}
+                      className="p-2 rounded-lg hover:bg-background/50 transition"
+                      title={msg.is_active ? 'Deactivate' : 'Activate'}
+                    >
+                      {msg.is_active ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(msg.id)}
+                      className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </main>
   );
 }
+    

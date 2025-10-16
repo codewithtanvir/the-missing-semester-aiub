@@ -13,9 +13,9 @@ import {
   LogOut,
   Menu,
   X,
-  Megaphone
+  Megaphone,
+  ChevronDown
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface NavItem {
   href: string;
@@ -63,7 +63,8 @@ export default function AdminDashboardLayout({
 }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
@@ -89,8 +90,8 @@ export default function AdminDashboardLayout({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent"></div>
       </div>
     );
   }
@@ -100,118 +101,154 @@ export default function AdminDashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Mobile sidebar backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 sm:w-72 lg:w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <div className="rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 p-1.5">
-                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-base sm:text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Missing Semester
-                </h2>
-                <p className="text-xs text-gray-500">Admin Panel</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-gray-500 hover:text-gray-700 p-1"
-            >
-              <X className="h-5 w-5 sm:h-6 sm:w-6" />
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-2 sm:px-3 py-3 sm:py-4 space-y-1 overflow-y-auto">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-2.5 sm:gap-3 px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-blue-50 text-blue-600'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {item.icon}
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* User info & logout */}
-          <div className="p-3 sm:p-4 border-t border-gray-200">
-            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 px-1 sm:px-2">
-              <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
-                {user.email?.[0].toUpperCase()}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
-                  {user.email}
-                </p>
-                <p className="text-xs text-gray-500">Administrator</p>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              className="w-full justify-start text-sm"
-              size="sm"
-              onClick={handleLogout}
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main content */}
-      <div className="lg:pl-64">
-        {/* Top bar */}
-        <header className="sticky top-0 z-30 h-14 sm:h-16 bg-white border-b border-gray-200">
-          <div className="flex items-center justify-between h-full px-3 sm:px-4 lg:px-6">
+    <div className="min-h-screen bg-background">
+      {/* Top Navbar */}
+      <nav className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden text-gray-500 hover:text-gray-700 p-1"
-              >
-                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
-              </button>
-              <h1 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
-                {navItems.find((item) => item.href === pathname)?.label || 'Dashboard'}
-              </h1>
+              <div className="rounded-xl bg-primary p-2">
+                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              </div>
+              <div className="hidden sm:block">
+                <h2 className="text-xl font-bold tracking-tight">Missing Semester</h2>
+                <p className="text-xs text-muted-foreground">Admin Panel</p>
+              </div>
+              <div className="sm:hidden">
+                <h2 className="text-lg font-bold">Admin</h2>
+              </div>
             </div>
-            <div className="hidden sm:block text-xs sm:text-sm text-gray-500 truncate max-w-[200px]">
-              Welcome, {user.email?.split('@')[0]}
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-2">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      isActive
+                        ? 'bg-primary text-white shadow-md'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* User Menu & Mobile Toggle */}
+            <div className="flex items-center gap-3">
+              {/* Desktop User Menu */}
+              <div className="hidden sm:block relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-3 px-4 py-2 rounded-full hover:bg-muted transition"
+                >
+                  <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
+                    {user.email?.[0].toUpperCase()}
+                  </div>
+                  <div className="text-left hidden md:block">
+                    <p className="text-sm font-medium truncate max-w-[150px]">
+                      {user.email?.split('@')[0]}
+                    </p>
+                    <p className="text-xs text-muted-foreground">Admin</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* User Dropdown */}
+                {userMenuOpen && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setUserMenuOpen(false)}
+                    />
+                    <div className="absolute right-0 mt-2 w-56 bg-card rounded-xl shadow-lg border border-border z-50 overflow-hidden">
+                      <div className="px-4 py-3 border-b border-border">
+                        <p className="text-sm font-medium truncate">{user.email}</p>
+                        <p className="text-xs text-muted-foreground">Administrator</p>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-lg hover:bg-muted transition"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
             </div>
           </div>
-        </header>
 
-        {/* Page content */}
-        <main className="p-3 sm:p-4 lg:p-6 xl:p-8">
-          {children}
-        </main>
-      </div>
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden border-t border-border py-4 space-y-2">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all ${
+                      isActive
+                        ? 'bg-primary text-white'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+              
+              {/* Mobile User Info */}
+              <div className="sm:hidden pt-4 mt-4 border-t border-border space-y-3">
+                <div className="flex items-center gap-3 px-4">
+                  <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
+                    {user.email?.[0].toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium truncate">{user.email}</p>
+                    <p className="text-xs text-muted-foreground">Administrator</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-red-600 bg-red-50 rounded-xl hover:bg-red-100 transition"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Page Content */}
+      <main className="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+        {children}
+      </main>
     </div>
   );
 }

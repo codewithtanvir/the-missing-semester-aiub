@@ -187,133 +187,139 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-neutral-200 border-t-neutral-900"></div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Analytics & Insights</h2>
-        <p className="text-gray-600 mt-1">Track system usage and performance metrics</p>
+        <h2 className="text-6xl font-extralight text-neutral-900 tracking-tight">Analytics</h2>
+        <p className="text-neutral-500 mt-3 font-light">Track system usage and performance metrics</p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Files</CardTitle>
-            <FileText className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalFiles}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {analytics.filesThisWeek} added this week
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Total Files</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <p className="text-5xl font-extralight text-neutral-900 mb-2">{analytics.totalFiles}</p>
+          <p className="text-sm text-neutral-500 font-light">
+            {analytics.filesThisWeek} added this week
+          </p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Storage Used</CardTitle>
-            <Download className="h-4 w-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatBytes(analytics.storageUsed)}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Across all courses
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Storage Used</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Download className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <p className="text-4xl font-extralight text-neutral-900 mb-2">{formatBytes(analytics.storageUsed)}</p>
+          <p className="text-sm text-neutral-500 font-light">
+            Across all courses
+          </p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">This Month</CardTitle>
-            <Calendar className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{analytics.filesThisMonth}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Files uploaded
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">This Month</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Calendar className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <p className="text-5xl font-extralight text-neutral-900 mb-2">{analytics.filesThisMonth}</p>
+          <p className="text-sm text-neutral-500 font-light">
+            Files uploaded
+          </p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-orange-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalCourses}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Total in system
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Active Courses</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BookOpen className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <p className="text-5xl font-extralight text-neutral-900 mb-2">{analytics.totalCourses}</p>
+          <p className="text-sm text-neutral-500 font-light">
+            Total in system
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Top Courses */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-blue-600" />
-              Top Courses by Files
-            </CardTitle>
-            <CardDescription>Most active courses with uploaded content</CardDescription>
-          </CardHeader>
-          <CardContent>
+        <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+          <div className="p-8 border-b border-neutral-100">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                <TrendingUp className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-2xl font-light text-neutral-900">Top Courses</h3>
+            </div>
+            <p className="text-neutral-500 font-light text-sm">Most active courses with uploaded content</p>
+          </div>
+          <div className="p-8">
             {analytics.topCourses.length === 0 ? (
-              <p className="text-center py-8 text-gray-500">No data available</p>
+              <p className="text-center py-8 text-neutral-500 font-light">No data available</p>
             ) : (
               <div className="space-y-4">
                 {analytics.topCourses.map((course, index) => (
-                  <div key={course.code} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-sm font-bold text-blue-600">
+                  <div key={course.code} className="flex items-center justify-between p-4 rounded-2xl hover:bg-neutral-50 transition-colors duration-200">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="h-10 w-10 rounded-full bg-neutral-900 flex items-center justify-center text-sm font-light text-white">
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate">{course.code}</p>
-                        <p className="text-xs text-gray-500 truncate">{course.name}</p>
+                        <p className="font-medium text-sm text-neutral-900 truncate">{course.code}</p>
+                        <p className="text-xs text-neutral-500 font-light truncate">{course.name}</p>
                       </div>
                     </div>
-                    <Badge variant="secondary">{course.fileCount} files</Badge>
+                    <span className="px-3 py-1 rounded-full bg-neutral-50 text-neutral-700 text-sm font-light border border-neutral-200">
+                      {course.fileCount} files
+                    </span>
                   </div>
                 ))}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Category Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <PieChart className="h-5 w-5 text-purple-600" />
-              Files by Category
-            </CardTitle>
-            <CardDescription>Distribution across exam categories</CardDescription>
-          </CardHeader>
-          <CardContent>
+        <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+          <div className="p-8 border-b border-neutral-100">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                <PieChart className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-2xl font-light text-neutral-900">Files by Category</h3>
+            </div>
+            <p className="text-neutral-500 font-light text-sm">Distribution across exam categories</p>
+          </div>
+          <div className="p-8">
             {analytics.topCategories.length === 0 ? (
-              <p className="text-center py-8 text-gray-500">No data available</p>
+              <p className="text-center py-8 text-neutral-500 font-light">No data available</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {analytics.topCategories.map((cat) => {
                   const percentage = (cat.count / analytics.totalFiles * 100).toFixed(1);
                   return (
-                    <div key={cat.category} className="space-y-2">
+                    <div key={cat.category} className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">{cat.category}</span>
-                        <span className="text-gray-500">{cat.count} files ({percentage}%)</span>
+                        <span className="font-medium text-neutral-900">{cat.category}</span>
+                        <span className="text-neutral-500 font-light">{cat.count} files ({percentage}%)</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-neutral-100 rounded-full h-2">
                         <div
-                          className={`h-2 rounded-full ${getCategoryColor(cat.category)}`}
+                          className="h-2 rounded-full bg-neutral-900 transition-all duration-500"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
@@ -322,40 +328,44 @@ export default function AnalyticsPage() {
                 })}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Departments */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-green-600" />
-            Courses by Department
-          </CardTitle>
-          <CardDescription>Department-wise course distribution</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+        <div className="p-8 border-b border-neutral-100">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BarChart3 className="h-5 w-5 text-white" />
+            </div>
+            <h3 className="text-2xl font-light text-neutral-900">Courses by Department</h3>
+          </div>
+          <p className="text-neutral-500 font-light text-sm">Department-wise course distribution</p>
+        </div>
+        <div className="p-8">
           {analytics.filesByDepartment.length === 0 ? (
-            <p className="text-center py-8 text-gray-500">No data available</p>
+            <p className="text-center py-8 text-neutral-500 font-light">No data available</p>
           ) : (
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Department</TableHead>
-                  <TableHead className="text-right">Courses</TableHead>
-                  <TableHead className="text-right">Percentage</TableHead>
+                <TableRow className="border-neutral-100 hover:bg-transparent">
+                  <TableHead className="font-light text-neutral-500">Department</TableHead>
+                  <TableHead className="text-right font-light text-neutral-500">Courses</TableHead>
+                  <TableHead className="text-right font-light text-neutral-500">Percentage</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {analytics.filesByDepartment.map((dept) => {
                   const percentage = ((dept.count / analytics.totalCourses) * 100).toFixed(1);
                   return (
-                    <TableRow key={dept.department}>
-                      <TableCell className="font-medium">{dept.department}</TableCell>
-                      <TableCell className="text-right">{dept.count}</TableCell>
+                    <TableRow key={dept.department} className="border-neutral-100 hover:bg-neutral-50 transition-colors duration-200">
+                      <TableCell className="font-medium text-neutral-900">{dept.department}</TableCell>
+                      <TableCell className="text-right font-light text-neutral-700">{dept.count}</TableCell>
                       <TableCell className="text-right">
-                        <Badge variant="outline">{percentage}%</Badge>
+                        <span className="px-3 py-1 rounded-full bg-neutral-50 text-neutral-700 text-sm font-light border border-neutral-200">
+                          {percentage}%
+                        </span>
                       </TableCell>
                     </TableRow>
                   );
@@ -363,8 +373,8 @@ export default function AnalyticsPage() {
               </TableBody>
             </Table>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

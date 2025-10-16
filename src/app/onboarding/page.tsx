@@ -166,113 +166,149 @@ export default function OnboardingPage() {
 
   if (checkingProfile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-50">
-        <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
-          <p className="mt-4 text-neutral-600">Loading...</p>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center space-y-4">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-2 border-neutral-200 border-t-neutral-900"></div>
+          <p className="text-neutral-400 font-light">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-neutral-800">
-            Complete Your Profile
-          </CardTitle>
-          <CardDescription>
-            Please provide your information to continue
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 to-white p-6">
+      <div className="w-full max-w-2xl">
+        {/* Header */}
+        <div className="text-center mb-16 animate-in fade-in slide-in-from-top-4 duration-700">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl font-extralight tracking-tight text-neutral-900 mb-6">
+            Welcome
+          </h1>
+          <p className="text-lg sm:text-xl text-neutral-500 font-light max-w-md mx-auto">
+            Complete your profile to get started
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div className="bg-white rounded-3xl shadow-xl shadow-black/5 border border-neutral-100 p-8 sm:p-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Full Name */}
-            <div className="space-y-2">
-              <Label htmlFor="fullName">
-                Full Name <span className="text-red-500">*</span>
-              </Label>
-              <Input
+            <div className="space-y-3">
+              <label 
+                htmlFor="fullName"
+                className="block text-sm font-light text-neutral-600 tracking-wide"
+              >
+                FULL NAME <span className="text-red-500">*</span>
+              </label>
+              <input
                 id="fullName"
                 type="text"
                 placeholder="Enter your full name"
                 value={formData.fullName}
                 onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                className={errors.fullName ? 'border-red-500' : ''}
+                className={`w-full px-0 py-4 text-lg font-light text-neutral-900 placeholder:text-neutral-300 bg-transparent border-b-2 transition-all duration-300 outline-none ${
+                  errors.fullName 
+                    ? 'border-red-500' 
+                    : 'border-neutral-200 focus:border-neutral-900'
+                }`}
                 disabled={loading}
               />
               {errors.fullName && (
-                <p className="text-sm text-red-500">{errors.fullName}</p>
+                <p className="text-sm text-red-500 font-light mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  {errors.fullName}
+                </p>
               )}
             </div>
 
             {/* Student ID */}
-            <div className="space-y-2">
-              <Label htmlFor="studentId">
-                Student ID <span className="text-red-500">*</span>
-              </Label>
-              <Input
+            <div className="space-y-3">
+              <label 
+                htmlFor="studentId"
+                className="block text-sm font-light text-neutral-600 tracking-wide"
+              >
+                STUDENT ID <span className="text-red-500">*</span>
+              </label>
+              <input
                 id="studentId"
                 type="text"
                 placeholder="23-51455-1"
                 value={formData.studentId}
                 onChange={(e) => setFormData(prev => ({ ...prev, studentId: e.target.value }))}
-                className={errors.studentId ? 'border-red-500' : ''}
+                className={`w-full px-0 py-4 text-lg font-light text-neutral-900 placeholder:text-neutral-300 bg-transparent border-b-2 transition-all duration-300 outline-none font-mono ${
+                  errors.studentId 
+                    ? 'border-red-500' 
+                    : 'border-neutral-200 focus:border-neutral-900'
+                }`}
                 disabled={loading}
                 maxLength={11}
               />
-              {errors.studentId && (
-                <p className="text-sm text-red-500">{errors.studentId}</p>
+              {errors.studentId ? (
+                <p className="text-sm text-red-500 font-light mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  {errors.studentId}
+                </p>
+              ) : (
+                <p className="text-xs text-neutral-400 font-light mt-2">
+                  Format: XX-XXXXX-X
+                </p>
               )}
-              <p className="text-xs text-neutral-500">
-                Format: XX-XXXXX-X (e.g., 23-51455-1)
-              </p>
             </div>
 
             {/* Gender */}
-            <div className="space-y-2">
-              <Label htmlFor="gender">
-                Gender <span className="text-red-500">*</span>
-              </Label>
-              <Select
-                value={formData.gender}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}
-                disabled={loading}
+            <div className="space-y-3">
+              <label 
+                htmlFor="gender"
+                className="block text-sm font-light text-neutral-600 tracking-wide"
               >
-                <SelectTrigger className={errors.gender ? 'border-red-500' : ''}>
-                  <SelectValue placeholder="Select your gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
-                  <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
-                </SelectContent>
-              </Select>
+                GENDER <span className="text-red-500">*</span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {['Male', 'Female', 'Other', 'Prefer not to say'].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, gender: option }))}
+                    disabled={loading}
+                    className={`px-4 py-3 rounded-xl text-sm font-light transition-all duration-300 ${
+                      formData.gender === option
+                        ? 'bg-neutral-900 text-white shadow-lg scale-105'
+                        : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100 border border-neutral-200'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
               {errors.gender && (
-                <p className="text-sm text-red-500">{errors.gender}</p>
+                <p className="text-sm text-red-500 font-light mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  {errors.gender}
+                </p>
               )}
             </div>
 
             {/* Submit Button */}
-            <Button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-r-transparent"></span>
-                  Saving...
-                </span>
-              ) : (
-                'Complete Profile'
-              )}
-            </Button>
+            <div className="pt-6">
+              <button
+                type="submit"
+                className="w-full rounded-2xl bg-neutral-900 text-white px-8 py-5 text-lg font-light shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-3">
+                    <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                    Saving...
+                  </span>
+                ) : (
+                  'Complete Profile'
+                )}
+              </button>
+            </div>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+
+        {/* Footer Note */}
+        <p className="text-center text-sm text-neutral-400 font-light mt-8 animate-in fade-in duration-700 delay-300">
+          This information helps us personalize your experience
+        </p>
+      </div>
+    </main>
   );
 }

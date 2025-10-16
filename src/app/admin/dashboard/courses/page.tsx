@@ -114,18 +114,18 @@ export default function CoursesManagementPage() {
     setSaving(true);
 
     try {
-      // @ts-ignore - Supabase type inference issue
-      const { error } = await supabase
-        .from('courses')
-        .insert([{
-          code: formCode,
-          name: formName,
-          department: formDepartment,
-          description: formDescription || null,
-          semester: formSemester || null,
-          instructor: formInstructor || null,
-          credits: formCredits ? parseInt(formCredits) : null,
-        }]);
+      const courseData = {
+        code: formCode,
+        name: formName,
+        department: formDepartment,
+        description: formDescription || null,
+        semester: formSemester || null,
+        instructor: formInstructor || null,
+        credits: formCredits ? parseInt(formCredits) : null,
+      };
+      
+      const supabaseClient: any = supabase;
+      const { error } = await supabaseClient.from('courses').insert([courseData]);
 
       if (error) throw error;
 
@@ -155,18 +155,20 @@ export default function CoursesManagementPage() {
 
     setSaving(true);
     try {
-      // @ts-ignore - Supabase type inference issue
-      const { error } = await supabase
+      const updateData = {
+        code: formCode,
+        name: formName,
+        department: formDepartment,
+        description: formDescription || null,
+        semester: formSemester || null,
+        instructor: formInstructor || null,
+        credits: formCredits ? parseInt(formCredits) : null,
+      };
+      
+      const supabaseClient: any = supabase;
+      const { error } = await supabaseClient
         .from('courses')
-        .update({
-          code: formCode,
-          name: formName,
-          department: formDepartment,
-          description: formDescription || null,
-          semester: formSemester || null,
-          instructor: formInstructor || null,
-          credits: formCredits ? parseInt(formCredits) : null,
-        })
+        .update(updateData)
         .eq('id', currentCourse.id);
 
       if (error) throw error;
@@ -261,19 +263,22 @@ export default function CoursesManagementPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Course Management</h2>
-          <p className="text-gray-600 mt-1">Add, edit, and organize courses</p>
+          <h2 className="text-6xl font-extralight text-neutral-900 tracking-tight">Courses</h2>
+          <p className="text-neutral-500 mt-3 font-light">Add, edit, and organize courses</p>
         </div>
         <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={resetForm}>
-              <Plus className="h-4 w-4 mr-2" />
+            <button 
+              onClick={resetForm}
+              className="px-8 py-4 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 flex items-center gap-2 font-light shadow-lg hover:shadow-xl"
+            >
+              <Plus className="h-5 w-5" />
               Add Course
-            </Button>
+            </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
@@ -378,126 +383,127 @@ export default function CoursesManagementPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{courses.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Departments</CardTitle>
-            <GraduationCap className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {new Set(courses.map(c => c.department)).size}
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Total Courses</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BookOpen className="h-6 w-6 text-white" />
             </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Semester</CardTitle>
-            <BookOpen className="h-4 w-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {courses.find(c => c.semester)?.semester || '--'}
+          </div>
+          <p className="text-5xl font-extralight text-neutral-900">{courses.length}</p>
+        </div>
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Departments</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <GraduationCap className="h-6 w-6 text-white" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          <p className="text-5xl font-extralight text-neutral-900">
+            {new Set(courses.map(c => c.department)).size}
+          </p>
+        </div>
+        <div className="rounded-2xl border border-neutral-100 bg-white p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-light text-neutral-500 uppercase tracking-wider">Active Semester</p>
+            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BookOpen className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <p className="text-2xl font-light text-neutral-900">
+            {courses.find(c => c.semester)?.semester || '--'}
+          </p>
+        </div>
       </div>
 
       {/* Filters */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search courses..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div>
-              <select
-                value={selectedDepartment}
-                onChange={(e) => setSelectedDepartment(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <option value="all">All Departments</option>
-                {departments.map(dept => (
-                  <option key={dept} value={dept}>{dept}</option>
-                ))}
-              </select>
-            </div>
+      <div className="rounded-2xl border border-neutral-100 bg-white p-8">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="Search courses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-full border border-neutral-200 focus:border-neutral-900 focus:outline-none transition-all duration-300 font-light"
+            />
           </div>
-        </CardContent>
-      </Card>
+          <div>
+            <select
+              value={selectedDepartment}
+              onChange={(e) => setSelectedDepartment(e.target.value)}
+              className="w-full px-4 py-3 rounded-full border border-neutral-200 focus:border-neutral-900 focus:outline-none transition-all duration-300 font-light bg-white"
+            >
+              <option value="all">All Departments</option>
+              {departments.map(dept => (
+                <option key={dept} value={dept}>{dept}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
 
       {/* Courses Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Courses ({filteredCourses.length})</CardTitle>
-          <CardDescription>All courses in the system</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+        <div className="p-8 border-b border-neutral-100">
+          <h3 className="text-2xl font-light text-neutral-900">Courses <span className="text-neutral-400">({filteredCourses.length})</span></h3>
+          <p className="text-neutral-500 mt-1 font-light text-sm">All courses in the system</p>
+        </div>
+        <div className="p-8">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="text-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-neutral-200 border-t-neutral-900 mx-auto"></div>
             </div>
           ) : filteredCourses.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No courses found</p>
+            <div className="text-center py-20">
+              <div className="w-20 h-20 rounded-2xl bg-neutral-50 flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="h-10 w-10 text-neutral-400" />
+              </div>
+              <p className="text-neutral-500 font-light">No courses found</p>
             </div>
           ) : (
-            <div className="overflow-x-auto -mx-6 sm:-mx-0">
-              <div className="inline-block min-w-full align-middle">
+            <div className="overflow-x-auto -mx-8">
+              <div className="inline-block min-w-full align-middle px-8">
                 <div className="overflow-hidden">
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead className="whitespace-nowrap">Code</TableHead>
-                        <TableHead className="whitespace-nowrap">Name</TableHead>
-                        <TableHead className="whitespace-nowrap">Department</TableHead>
-                        <TableHead className="whitespace-nowrap">Instructor</TableHead>
-                        <TableHead className="whitespace-nowrap">Credits</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
+                      <TableRow className="border-neutral-100 hover:bg-transparent">
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Code</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Name</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Department</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Instructor</TableHead>
+                        <TableHead className="whitespace-nowrap font-light text-neutral-500">Credits</TableHead>
+                        <TableHead className="text-right whitespace-nowrap font-light text-neutral-500">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredCourses.map((course) => (
-                        <TableRow key={course.id}>
-                          <TableCell className="font-medium whitespace-nowrap">{course.code}</TableCell>
-                          <TableCell className="whitespace-nowrap">{course.name}</TableCell>
+                        <TableRow key={course.id} className="border-neutral-100 hover:bg-neutral-50 transition-colors duration-200">
+                          <TableCell className="font-medium whitespace-nowrap text-neutral-900">{course.code}</TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-700">{course.name}</TableCell>
                           <TableCell className="whitespace-nowrap">
-                            <Badge variant="outline">{course.department}</Badge>
+                            <span className="px-3 py-1 rounded-full bg-neutral-50 text-neutral-700 text-sm font-light border border-neutral-200">
+                              {course.department}
+                            </span>
                           </TableCell>
-                          <TableCell className="whitespace-nowrap">{course.instructor || '--'}</TableCell>
-                          <TableCell className="whitespace-nowrap">{course.credits || '--'}</TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-600">{course.instructor || '--'}</TableCell>
+                          <TableCell className="whitespace-nowrap font-light text-neutral-600">{course.credits || '--'}</TableCell>
                           <TableCell className="text-right whitespace-nowrap">
                             <div className="flex items-center justify-end gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
+                              <button
                                 onClick={() => openEditDialog(course)}
+                                className="p-2 rounded-full hover:bg-neutral-100 transition-colors duration-200"
                               >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
+                                <Edit className="h-4 w-4 text-neutral-600" />
+                              </button>
+                              <button
                                 onClick={() => openDeleteDialog(course)}
+                                className="p-2 rounded-full hover:bg-red-50 transition-colors duration-200"
                               >
                                 <Trash2 className="h-4 w-4 text-red-600" />
-                              </Button>
+                              </button>
                             </div>
                           </TableCell>
                         </TableRow>
@@ -508,8 +514,8 @@ export default function CoursesManagementPage() {
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Edit Dialog */}
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>

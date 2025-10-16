@@ -181,30 +181,30 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-neutral-200 border-t-neutral-900"></div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
-        <p className="text-gray-600 mt-1">Manage your account and system preferences</p>
+        <h2 className="text-6xl font-extralight text-neutral-900 tracking-tight">Settings</h2>
+        <p className="text-neutral-500 mt-3 font-light">Manage your account and system preferences</p>
       </div>
 
-      <Tabs defaultValue="account" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="account">
+      <Tabs defaultValue="account" className="space-y-8">
+        <TabsList className="bg-neutral-50 p-2 rounded-full">
+          <TabsTrigger value="account" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm font-light">
             <User className="h-4 w-4 mr-2" />
             Account
           </TabsTrigger>
-          <TabsTrigger value="security">
+          <TabsTrigger value="security" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm font-light">
             <Shield className="h-4 w-4 mr-2" />
             Security
           </TabsTrigger>
-          <TabsTrigger value="system">
+          <TabsTrigger value="system" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm font-light">
             <Database className="h-4 w-4 mr-2" />
             System
           </TabsTrigger>
@@ -212,36 +212,36 @@ export default function SettingsPage() {
 
         {/* Account Tab */}
         <TabsContent value="account" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Profile Information
-              </CardTitle>
-              <CardDescription>
-                View and update your account details
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <User className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-light text-neutral-900">Profile Information</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">View and update your account details</p>
+            </div>
+            <div className="p-8 space-y-6">
               <div className="space-y-2">
-                <Label>Email Address</Label>
-                <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                  <Mail className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">{user?.email}</span>
+                <Label className="text-neutral-700 font-light">Email Address</Label>
+                <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <Mail className="h-5 w-5 text-neutral-400" />
+                  <span className="text-sm font-light text-neutral-900">{user?.email}</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>User ID</Label>
-                <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                  <User className="h-4 w-4 text-gray-500" />
-                  <span className="font-mono text-xs">{user?.id}</span>
+                <Label className="text-neutral-700 font-light">User ID</Label>
+                <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <User className="h-5 w-5 text-neutral-400" />
+                  <span className="font-mono text-xs text-neutral-600">{user?.id}</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Account Created</Label>
-                <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span className="text-sm">
+                <Label className="text-neutral-700 font-light">Account Created</Label>
+                <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <CheckCircle className="h-5 w-5 text-neutral-400" />
+                  <span className="text-sm font-light text-neutral-900">
                     {user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -250,189 +250,208 @@ export default function SettingsPage() {
                   </span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Mail className="h-5 w-5" />
-                Change Email Address
-              </CardTitle>
-              <CardDescription>
-                Update your email address for account access
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleEmailUpdate} className="space-y-4">
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <Mail className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-light text-neutral-900">Change Email Address</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">Update your email address for account access</p>
+            </div>
+            <div className="p-8">
+              <form onSubmit={handleEmailUpdate} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="new-email">New Email Address</Label>
+                  <Label htmlFor="new-email" className="text-neutral-700 font-light">New Email Address</Label>
                   <Input
                     id="new-email"
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     placeholder="new@example.com"
+                    className="rounded-2xl border-neutral-200 focus:border-neutral-900 font-light"
                     required
                   />
                 </div>
-                <Alert>
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Email Verification Required</AlertTitle>
-                  <AlertDescription>
-                    You'll receive a confirmation email at your new address. Click the link to complete the change.
-                  </AlertDescription>
-                </Alert>
-                <Button type="submit" disabled={updatingEmail}>
+                <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="flex gap-3">
+                    <AlertCircle className="h-5 w-5 text-neutral-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-medium text-sm text-neutral-900">Email Verification Required</p>
+                      <p className="text-sm text-neutral-600 font-light mt-1">
+                        You'll receive a confirmation email at your new address. Click the link to complete the change.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <button 
+                  type="submit" 
+                  disabled={updatingEmail}
+                  className="px-8 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-light disabled:opacity-50"
+                >
                   {updatingEmail ? "Updating..." : "Update Email"}
-                </Button>
+                </button>
               </form>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
         {/* Security Tab */}
         <TabsContent value="security" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Lock className="h-5 w-5" />
-                Change Password
-              </CardTitle>
-              <CardDescription>
-                Update your password to keep your account secure
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handlePasswordChange} className="space-y-4">
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <Lock className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-light text-neutral-900">Change Password</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">Update your password to keep your account secure</p>
+            </div>
+            <div className="p-8">
+              <form onSubmit={handlePasswordChange} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="new-password">New Password</Label>
+                  <Label htmlFor="new-password" className="text-neutral-700 font-light">New Password</Label>
                   <Input
                     id="new-password"
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="••••••••"
+                    className="rounded-2xl border-neutral-200 focus:border-neutral-900 font-light"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirm New Password</Label>
+                  <Label htmlFor="confirm-password" className="text-neutral-700 font-light">Confirm New Password</Label>
                   <Input
                     id="confirm-password"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
+                    className="rounded-2xl border-neutral-200 focus:border-neutral-900 font-light"
                     required
                   />
                 </div>
-                <Alert>
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Password Requirements</AlertTitle>
-                  <AlertDescription>
-                    Password must be at least 6 characters long.
-                  </AlertDescription>
-                </Alert>
-                <Button type="submit" disabled={changingPassword}>
-                  {changingPassword ? "Updating..." : "Update Password"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Security Status
-              </CardTitle>
-              <CardDescription>
-                Your account security overview
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                    <span className="text-sm font-medium">Email Verified</span>
+                <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="flex gap-3">
+                    <AlertCircle className="h-5 w-5 text-neutral-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-medium text-sm text-neutral-900">Password Requirements</p>
+                      <p className="text-sm text-neutral-600 font-light mt-1">
+                        Password must be at least 6 characters long.
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-xs text-green-700">Active</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                    <span className="text-sm font-medium">Admin Access</span>
+                <button 
+                  type="submit" 
+                  disabled={changingPassword}
+                  className="px-8 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-light disabled:opacity-50"
+                >
+                  {changingPassword ? "Updating..." : "Update Password"}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-light text-neutral-900">Security Status</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">Your account security overview</p>
+            </div>
+            <div className="p-8">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-neutral-700" />
+                    <span className="text-sm font-medium text-neutral-900">Email Verified</span>
                   </div>
-                  <span className="text-xs text-green-700">Enabled</span>
+                  <span className="text-xs text-neutral-600 font-light">Active</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-neutral-700" />
+                    <span className="text-sm font-medium text-neutral-900">Admin Access</span>
+                  </div>
+                  <span className="text-xs text-neutral-600 font-light">Enabled</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
         {/* System Tab */}
         <TabsContent value="system" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Database className="h-5 w-5" />
-                System Statistics
-              </CardTitle>
-              <CardDescription>
-                Overview of system resources and usage
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="text-2xl font-bold text-blue-700">{stats.totalFiles}</div>
-                  <div className="text-sm text-blue-600 mt-1">Total Files</div>
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <Database className="h-5 w-5 text-white" />
                 </div>
-                <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                  <div className="text-2xl font-bold text-green-700">{stats.totalCourses}</div>
-                  <div className="text-sm text-green-600 mt-1">Total Courses</div>
+                <h3 className="text-2xl font-light text-neutral-900">System Statistics</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">Overview of system resources and usage</p>
+            </div>
+            <div className="p-8">
+              <div className="grid gap-6 md:grid-cols-3">
+                <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="text-5xl font-extralight text-neutral-900">{stats.totalFiles}</div>
+                  <div className="text-sm text-neutral-600 font-light mt-2">Total Files</div>
                 </div>
-                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                  <div className="text-2xl font-bold text-purple-700">{formatBytes(stats.totalStorage)}</div>
-                  <div className="text-sm text-purple-600 mt-1">Storage Used</div>
+                <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="text-5xl font-extralight text-neutral-900">{stats.totalCourses}</div>
+                  <div className="text-sm text-neutral-600 font-light mt-2">Total Courses</div>
+                </div>
+                <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="text-4xl font-extralight text-neutral-900">{formatBytes(stats.totalStorage)}</div>
+                  <div className="text-sm text-neutral-600 font-light mt-2">Storage Used</div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <SettingsIcon className="h-5 w-5" />
-                System Information
-              </CardTitle>
-              <CardDescription>
-                Platform and configuration details
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Platform</span>
-                  <span className="text-sm text-gray-600">Next.js 14 + Supabase</span>
+          <div className="rounded-2xl border border-neutral-100 bg-white overflow-hidden">
+            <div className="p-8 border-b border-neutral-100">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center">
+                  <SettingsIcon className="h-5 w-5 text-white" />
                 </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Environment</span>
-                  <span className="text-sm text-gray-600">Production</span>
+                <h3 className="text-2xl font-light text-neutral-900">System Information</h3>
+              </div>
+              <p className="text-neutral-500 font-light text-sm">Platform and configuration details</p>
+            </div>
+            <div className="p-8">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <span className="text-sm font-medium text-neutral-900">Platform</span>
+                  <span className="text-sm text-neutral-600 font-light">Next.js 14 + Supabase</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Database</span>
-                  <span className="text-sm text-gray-600">PostgreSQL (Supabase)</span>
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <span className="text-sm font-medium text-neutral-900">Environment</span>
+                  <span className="text-sm text-neutral-600 font-light">Production</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Storage</span>
-                  <span className="text-sm text-gray-600">Supabase Storage</span>
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <span className="text-sm font-medium text-neutral-900">Database</span>
+                  <span className="text-sm text-neutral-600 font-light">PostgreSQL (Supabase)</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <span className="text-sm font-medium text-neutral-900">Storage</span>
+                  <span className="text-sm text-neutral-600 font-light">Supabase Storage</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

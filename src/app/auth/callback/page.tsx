@@ -114,27 +114,27 @@ export default function AuthCallbackPage() {
   }, [router, supabase]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+    <main className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="text-center max-w-md">
         {error ? (
           <>
-            <div className="text-red-600 mb-4">
-              <svg className="h-12 w-12 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="text-red-600 mb-6">
+              <svg className="h-16 w-16 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="font-semibold">Authentication Error</p>
+              <p className="text-2xl font-bold">Authentication Error</p>
             </div>
-            <p className="text-gray-600 mb-4">{error}</p>
-            <p className="text-sm text-gray-500">Redirecting to login...</p>
+            <p className="text-muted-foreground text-lg mb-4">{error}</p>
+            <p className="text-sm text-muted-foreground">Redirecting to login...</p>
           </>
         ) : (
           <>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Completing sign in...</p>
-            <p className="text-xs text-gray-500 mt-2">Processing authentication response...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-6"></div>
+            <p className="text-2xl font-bold mb-2">Completing sign in...</p>
+            <p className="text-muted-foreground">Processing authentication response...</p>
           </>
         )}
       </div>
-    </div>
+    </main>
   );
 }

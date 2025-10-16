@@ -39,18 +39,18 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto rounded-full bg-blue-100 p-3 w-fit mb-4">
-            <Lock className="h-6 w-6 text-blue-600" />
+    <main className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="w-full max-w-md rounded-2xl bg-card shadow-lg p-8">
+        <header className="text-center mb-8">
+          <div className="mx-auto rounded-full bg-primary/10 p-4 w-fit mb-4">
+            <Lock className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Admin Login</CardTitle>
-          <CardDescription>
+          <h1 className="text-3xl font-extrabold tracking-tight mb-2">Admin Login</h1>
+          <p className="text-muted-foreground text-lg">
             Sign in to manage course resources
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </header>
+        <div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -75,16 +75,20 @@ export default function AdminLoginPage() {
               />
             </div>
             {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+              <div className="rounded-xl bg-red-50 p-4 text-sm text-red-700">
                 {error}
               </div>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <button 
+              type="submit" 
+              className="w-full rounded-full bg-primary text-white px-6 py-3 text-lg font-semibold shadow hover:bg-primary/90 transition disabled:opacity-50" 
+              disabled={loading}
+            >
               {loading ? "Signing in..." : "Sign In"}
-            </Button>
+            </button>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </main>
   );
 }

@@ -114,41 +114,41 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-white">
       <Navigation />
       <BroadcastMessage />
 
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
+      <main className="container mx-auto px-6 sm:px-8 lg:px-12 py-12 max-w-7xl">
         {/* Breadcrumb */}
-        <div className="mb-8">
+        <div className="mb-12">
           <Breadcrumb items={[{ label: 'Courses' }]} />
         </div>
 
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-light text-neutral-900 mb-2">
-            All Courses
+        {/* Header - Ultra Minimal */}
+        <div className="mb-16 text-center max-w-4xl mx-auto">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-extralight text-neutral-900 mb-6 leading-none tracking-tight">
+            Courses
           </h1>
-          <p className="text-neutral-600">
-            Explore {courses.length} courses • Find materials instantly
+          <p className="text-xl text-neutral-500 font-light">
+            {courses.length} courses across {departments.length} departments
           </p>
         </div>
 
-        {/* Search Bar - Centered with underline */}
-        <div className="mb-12 max-w-2xl mx-auto">
-          <div className="relative">
-            <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
+        {/* Search Bar - Ultra Minimal */}
+        <div className="mb-16 max-w-3xl mx-auto">
+          <div className="relative group">
+            <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400 group-focus-within:text-neutral-900 transition-colors duration-300" />
             <input
               type="text"
-              placeholder="Search by course code, name, or instructor..."
+              placeholder="Search courses..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-8 py-3 text-neutral-900 placeholder:text-neutral-400 border-b border-neutral-300 focus:border-neutral-900 outline-none transition-colors duration-200 bg-transparent"
+              className="w-full pl-8 pr-10 py-4 text-lg text-neutral-900 placeholder:text-neutral-400 border-b-2 border-neutral-200 focus:border-neutral-900 outline-none transition-all duration-300 bg-transparent font-light"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
                 aria-label="Clear search"
               >
                 <X className="h-5 w-5" />
@@ -157,10 +157,10 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        {/* Department Filter */}
-        <div className="mb-10">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {(showAllDepartments ? departments : departments.slice(0, 6)).map((dept) => {
+        {/* Department Filter - Elegant Pills */}
+        <div className="mb-16">
+          <div className="flex flex-wrap gap-3 justify-center max-w-5xl mx-auto">
+            {(showAllDepartments ? departments : departments.slice(0, 8)).map((dept) => {
               const count = courses.filter(c => c.department === dept).length;
               const isSelected = selectedDepartment === dept;
               
@@ -169,45 +169,55 @@ export default function CoursesPage() {
                   key={dept}
                   onClick={() => setSelectedDepartment(isSelected ? null : dept)}
                   className={`
-                    px-4 py-2 text-sm border transition-all duration-200
+                    group px-6 py-3 text-sm font-light rounded-full border-2 transition-all duration-300
                     ${isSelected 
-                      ? 'bg-neutral-900 text-white border-neutral-900' 
-                      : 'bg-white text-neutral-700 border-neutral-200 hover:border-neutral-400 hover:bg-neutral-50'
+                      ? 'bg-neutral-900 text-white border-neutral-900 shadow-lg' 
+                      : 'bg-white text-neutral-700 border-neutral-200 hover:border-neutral-400 hover:shadow-md'
                     }
                   `}
                 >
-                  {dept} <span className={isSelected ? 'text-neutral-300' : 'text-neutral-400'}>({count})</span>
+                  {dept}
+                  <span className={`ml-2 text-xs ${isSelected ? 'text-neutral-400' : 'text-neutral-500'}`}>
+                    {count}
+                  </span>
                 </button>
               );
             })}
             
-            {departments.length > 6 && (
+            {departments.length > 8 && (
               <button
                 onClick={() => setShowAllDepartments(!showAllDepartments)}
-                className="px-4 py-2 text-sm text-neutral-500 hover:text-neutral-900 transition-colors underline decoration-dotted underline-offset-4"
+                className="px-6 py-3 text-sm font-light text-neutral-500 hover:text-neutral-900 transition-colors duration-200 underline underline-offset-4 decoration-dotted"
               >
-                {showAllDepartments ? 'Show Less' : 'Show More'}
+                {showAllDepartments ? 'Show Less' : `+${departments.length - 8} More`}
               </button>
             )}
           </div>
         </div>
 
         {/* View Toggle & Count */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-neutral-200">
-          <h2 className="text-neutral-900 font-normal">
-            {filteredCourses.length} {filteredCourses.length === 1 ? 'Course' : 'Courses'}
+        <div className="flex items-center justify-between mb-12 pb-6 border-b border-neutral-100">
+          <div>
+            <h2 className="text-2xl font-light text-neutral-900">
+              {filteredCourses.length} 
+              <span className="text-neutral-400 ml-2">
+                {filteredCourses.length === 1 ? 'result' : 'results'}
+              </span>
+            </h2>
             {selectedDepartment && (
-              <span className="text-neutral-500 ml-2">in {selectedDepartment}</span>
+              <p className="text-sm text-neutral-500 mt-1 font-light">
+                Filtered by {selectedDepartment}
+              </p>
             )}
-          </h2>
+          </div>
           
-          <div className="flex items-center gap-1 border border-neutral-200 bg-white">
+          <div className="flex items-center gap-2 bg-neutral-50 p-1 rounded-full border border-neutral-200">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 transition-colors duration-200 ${
+              className={`p-3 rounded-full transition-all duration-300 ${
                 viewMode === 'grid' 
-                  ? 'bg-neutral-900 text-white' 
-                  : 'text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50'
+                  ? 'bg-white text-neutral-900 shadow-md' 
+                  : 'text-neutral-400 hover:text-neutral-900'
               }`}
               aria-label="Grid view"
             >
@@ -215,10 +225,10 @@ export default function CoursesPage() {
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 transition-colors duration-200 ${
+              className={`p-3 rounded-full transition-all duration-300 ${
                 viewMode === 'list' 
-                  ? 'bg-neutral-900 text-white' 
-                  : 'text-neutral-400 hover:text-neutral-900 hover:bg-neutral-50'
+                  ? 'bg-white text-neutral-900 shadow-md' 
+                  : 'text-neutral-400 hover:text-neutral-900'
               }`}
               aria-label="List view"
             >
@@ -229,39 +239,46 @@ export default function CoursesPage() {
 
         {/* Courses Content */}
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-900 mx-auto mb-4"></div>
-              <p className="text-neutral-600">Loading courses...</p>
+          <div className="flex items-center justify-center py-32">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 border-2 border-neutral-200 border-t-neutral-900 rounded-full animate-spin mx-auto"></div>
+              <p className="text-neutral-500 font-light">Loading courses...</p>
             </div>
           </div>
         ) : (
           <>
             {/* Pinned Courses Section */}
             {pinnedCourseIds.size > 0 && !searchQuery && !selectedDepartment && (
-              <div className="mb-16">
-                <div className="flex items-center gap-2 mb-6">
-                  <Pin className="h-4 w-4 text-amber-600 fill-current" />
-                  <h2 className="text-neutral-900 font-normal">Pinned Courses</h2>
-                  <span className="px-2 py-0.5 bg-amber-50 text-amber-700 text-xs border border-amber-200">{pinnedCourseIds.size}</span>
+              <div className="mb-20 animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="flex items-center gap-3 mb-8">
+                  <Pin className="h-5 w-5 text-amber-600 fill-current animate-in zoom-in duration-300" />
+                  <h2 className="text-2xl font-light text-neutral-900">Pinned</h2>
+                  <span className="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-full border border-amber-200 animate-in zoom-in duration-300 delay-100">
+                    {pinnedCourseIds.size}
+                  </span>
                 </div>
                 <div className={viewMode === 'grid' 
                   ? "grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                  : "space-y-3"
+                  : "space-y-4"
                 }>
                   {courses
                     .filter(course => pinnedCourseIds.has(course.id))
-                    .map((course) => (
-                      <CourseCard 
-                        key={course.id} 
-                        course={course} 
-                        viewMode={viewMode}
-                        isPinned={true}
-                        onPinChange={loadPinnedCourses}
-                      />
+                    .map((course, index) => (
+                      <div 
+                        key={course.id}
+                        className="animate-in fade-in slide-in-from-bottom-4 duration-500"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                      >
+                        <CourseCard 
+                          course={course} 
+                          viewMode={viewMode}
+                          isPinned={true}
+                          onPinChange={loadPinnedCourses}
+                        />
+                      </div>
                     ))}
                 </div>
-                <div className="border-b border-neutral-100 mt-16 mb-16"></div>
+                <div className="border-b border-neutral-100 mt-20 mb-20"></div>
               </div>
             )}
 
@@ -269,7 +286,7 @@ export default function CoursesPage() {
             {filteredCourses.length > 0 ? (
               <div className={viewMode === 'grid' 
                 ? "grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                : "space-y-3"
+                : "space-y-4"
               }>
                 {filteredCourses.map((course) => (
                   <CourseCard 
@@ -282,49 +299,53 @@ export default function CoursesPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white border border-neutral-100">
-                <Search className="h-16 w-16 text-neutral-200 mx-auto mb-4" />
-                <h3 className="text-neutral-900 font-normal mb-2">No courses found</h3>
-                <p className="text-neutral-500 mb-6">
-                  {searchQuery 
-                    ? `No courses match "${searchQuery}"`
-                    : selectedDepartment
-                    ? `No courses in ${selectedDepartment}`
-                    : "No courses available"}
-                </p>
-                {(searchQuery || selectedDepartment) && (
-                  <button
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedDepartment(null);
-                    }}
-                    className="px-6 py-2 bg-neutral-900 text-white hover:bg-neutral-800 transition-colors duration-200"
-                  >
-                    Clear Filters
-                  </button>
-                )}
+              <div className="text-center py-32">
+                <div className="max-w-md mx-auto space-y-6">
+                  <div className="w-24 h-24 mx-auto rounded-full bg-neutral-50 flex items-center justify-center">
+                    <Search className="h-12 w-12 text-neutral-300" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-light text-neutral-900">No results found</h3>
+                    <p className="text-neutral-500 font-light">
+                      {searchQuery 
+                        ? `Try adjusting your search`
+                        : selectedDepartment
+                        ? `No courses available in ${selectedDepartment}`
+                        : "No courses available"}
+                    </p>
+                  </div>
+                  {(searchQuery || selectedDepartment) && (
+                    <button
+                      onClick={() => {
+                        setSearchQuery("");
+                        setSelectedDepartment(null);
+                      }}
+                      className="px-8 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
+                    >
+                      Clear All Filters
+                    </button>
+                  )}
+                </div>
               </div>
             )}
           </>
         )}
 
-        {/* Stats Footer */}
+        {/* Stats Footer - Elegant */}
         {!loading && courses.length > 0 && (
-          <div className="mt-20 pt-8 border-t border-neutral-100">
-            <div className="flex justify-center gap-16 text-center">
-              <div>
-                <div className="text-3xl font-light text-neutral-900 mb-1">{courses.length}</div>
-                <div className="text-sm text-neutral-500 uppercase tracking-wider">Total Courses</div>
+          <div className="mt-32 pt-12 border-t border-neutral-100">
+            <div className="grid grid-cols-3 gap-12 max-w-3xl mx-auto text-center">
+              <div className="space-y-2">
+                <div className="text-6xl font-extralight text-neutral-900">{courses.length}</div>
+                <div className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Courses</div>
               </div>
-              <div className="border-l border-neutral-200"></div>
-              <div>
-                <div className="text-3xl font-light text-neutral-900 mb-1">{departments.length}</div>
-                <div className="text-sm text-neutral-500 uppercase tracking-wider">Departments</div>
+              <div className="space-y-2">
+                <div className="text-6xl font-extralight text-neutral-900">{departments.length}</div>
+                <div className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Departments</div>
               </div>
-              <div className="border-l border-neutral-200"></div>
-              <div>
-                <div className="text-3xl font-light text-neutral-900 mb-1">{pinnedCourseIds.size}</div>
-                <div className="text-sm text-neutral-500 uppercase tracking-wider">Pinned</div>
+              <div className="space-y-2">
+                <div className="text-6xl font-extralight text-neutral-900">{pinnedCourseIds.size}</div>
+                <div className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Pinned</div>
               </div>
             </div>
           </div>
@@ -332,10 +353,10 @@ export default function CoursesPage() {
       </main>
 
       {/* Minimal Footer */}
-      <footer className="border-t border-neutral-200 mt-20 bg-white">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <p className="text-sm text-neutral-400">
-            © {new Date().getFullYear()} Missing Semester. All rights reserved.
+      <footer className="border-t border-neutral-100 mt-24 bg-white">
+        <div className="container mx-auto px-6 py-12 text-center">
+          <p className="text-sm text-neutral-400 font-light">
+            © {new Date().getFullYear()} Missing Semester
           </p>
         </div>
       </footer>

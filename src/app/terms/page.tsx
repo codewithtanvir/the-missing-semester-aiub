@@ -1,36 +1,25 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 max-w-4xl">
-        <Link href="/">
-          <Button variant="ghost" className="mb-4 sm:mb-6 text-sm sm:text-base">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
+    <main className="min-h-screen bg-background px-4 py-10">
+      <div className="mx-auto max-w-3xl">
+        <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition mb-8">
+          <ArrowLeft className="h-4 w-4" />
+          <span className="text-lg">Back</span>
         </Link>
 
-        <Card>
-          <CardHeader className="px-4 sm:px-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <div className="rounded-full bg-blue-100 p-2 sm:p-3">
-                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl sm:text-3xl">Terms of Service</CardTitle>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                  Effective Date: October 15, 2025 | Last Updated: October 15, 2025
-                </p>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="prose prose-sm sm:prose-base prose-blue max-w-none px-4 sm:px-6">
+        <header className="mb-12">
+          <h1 className="text-5xl font-extrabold tracking-tight mb-3">Terms of Service</h1>
+          <p className="text-muted-foreground text-lg">
+            Effective Date: October 15, 2025 | Last Updated: October 15, 2025
+          </p>
+        </header>
+
+        <article className="prose prose-lg max-w-none space-y-8">
             <h2>Acceptance of Terms</h2>
             <p>
               By accessing and using AIUB Files (aiubfiles.app), you accept and agree 
@@ -162,18 +151,17 @@ export default function TermsPage() {
               Bangladesh.
             </p>
 
-            <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-sm text-blue-900 mb-2">
-                <strong>Last Updated:</strong> October 15, 2025
-              </p>
-              <p className="text-sm text-blue-900 mb-0">
-                By continuing to use AIUB Files, you acknowledge that you have read, 
-                understood, and agree to be bound by these Terms of Service.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+          <div className="mt-12 rounded-2xl bg-muted p-6">
+            <p className="text-sm mb-2">
+              <strong>Last Updated:</strong> October 15, 2025
+            </p>
+            <p className="text-sm">
+              By continuing to use AIUB Files, you acknowledge that you have read, 
+              understood, and agree to be bound by these Terms of Service.
+            </p>
+          </div>
+        </article>
       </div>
-    </div>
+    </main>
   );
 }
