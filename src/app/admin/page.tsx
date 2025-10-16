@@ -3,11 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lock } from "lucide-react";
+import { Shield, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -39,56 +36,92 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md rounded-2xl bg-card shadow-lg p-8">
-        <header className="text-center mb-8">
-          <div className="mx-auto rounded-full bg-primary/10 p-4 w-fit mb-4">
-            <Lock className="h-8 w-8 text-primary" />
+    <div className="min-h-screen flex items-center justify-center bg-white p-6">
+      <div className="w-full max-w-md mx-auto">
+        {/* Brand */}
+        <div className="text-center mb-12 space-y-6">
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-neutral-900 flex items-center justify-center">
+            <Shield className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight mb-2">Admin Login</h1>
-          <p className="text-muted-foreground text-lg">
-            Sign in to manage course resources
-          </p>
-        </header>
-        <div>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
+          <div className="space-y-2">
+            <h1 className="text-5xl font-extralight text-neutral-900 tracking-tight">
+              Admin
+            </h1>
+            <p className="text-neutral-500 font-light">
+              Sign in to manage course resources
+            </p>
+          </div>
+        </div>
+
+        {/* Login Form */}
+        <div className="space-y-6">
+          {error && (
+            <div className="rounded-2xl bg-red-50 border border-red-100 p-6">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="h-5 w-5 text-red-600" />
+                </div>
+                <div className="flex-1 space-y-2">
+                  <p className="font-medium text-red-900">Authentication Error</p>
+                  <p className="text-sm text-red-700 font-light">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-8">
+            {/* Email Input */}
+            <div className="space-y-3">
+              <label htmlFor="email" className="text-sm font-medium text-neutral-700 uppercase tracking-widest">
+                Email
+              </label>
+              <input
                 id="email"
                 type="email"
                 placeholder="admin@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="w-full px-0 py-3 text-lg font-light text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-200 focus:border-neutral-900 focus:outline-none transition-colors duration-300 placeholder:text-neutral-300"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
+
+            {/* Password Input */}
+            <div className="space-y-3">
+              <label htmlFor="password" className="text-sm font-medium text-neutral-700 uppercase tracking-widest">
+                Password
+              </label>
+              <input
                 id="password"
                 type="password"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="w-full px-0 py-3 text-lg font-light text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-200 focus:border-neutral-900 focus:outline-none transition-colors duration-300 placeholder:text-neutral-300"
               />
             </div>
-            {error && (
-              <div className="rounded-xl bg-red-50 p-4 text-sm text-red-700">
-                {error}
-              </div>
-            )}
-            <button 
-              type="submit" 
-              className="w-full rounded-full bg-primary text-white px-6 py-3 text-lg font-semibold shadow hover:bg-primary/90 transition disabled:opacity-50" 
+
+            {/* Submit Button */}
+            <button
+              type="submit"
               disabled={loading}
+              className="w-full bg-neutral-900 hover:bg-neutral-800 text-white rounded-full py-4 text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
+
+          <div className="pt-6 border-t border-neutral-100 text-center">
+            <Link 
+              href="/" 
+              className="text-sm text-neutral-500 hover:text-neutral-900 font-light transition-colors duration-200"
+            >
+              ← Back to home
+            </Link>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -14,7 +14,8 @@ import {
   Menu,
   X,
   Megaphone,
-  ChevronDown
+  ChevronDown,
+  Users
 } from 'lucide-react';
 
 interface NavItem {
@@ -28,6 +29,11 @@ const navItems: NavItem[] = [
     href: '/admin/dashboard',
     label: 'Dashboard',
     icon: <LayoutDashboard className="h-5 w-5" />,
+  },
+  {
+    href: '/admin/dashboard/users',
+    label: 'Users',
+    icon: <Users className="h-5 w-5" />,
   },
   {
     href: '/admin/dashboard/broadcast',

@@ -191,7 +191,7 @@ export default function ContributorsPage() {
             </Link>
             
             <a 
-              href="https://github.com/codewithtanvir/the-missing-semester-aiub"
+              href="https://github.com/codewithtanvir/"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -132,108 +132,108 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 md:space-y-12">
       {/* Welcome Section */}
-      <div className="space-y-3">
-        <h2 className="text-6xl font-extralight text-neutral-900">Dashboard</h2>
-        <p className="text-xl text-neutral-500 font-light">Monitor your system activity</p>
+      <div className="space-y-2 md:space-y-3">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-neutral-900">Dashboard</h2>
+        <p className="text-lg sm:text-xl text-neutral-500 font-light">Monitor your system activity</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
-              <Files className="h-6 w-6 text-white" />
+      <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
+        <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Files className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="text-5xl font-extralight text-neutral-900">{stats.totalFiles}</div>
-            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Total Files</p>
+          <div className="space-y-1 sm:space-y-2">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-extralight text-neutral-900">{stats.totalFiles}</div>
+            <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">Total Files</p>
           </div>
         </div>
 
-        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
-              <BookOpen className="h-6 w-6 text-white" />
+        <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="text-5xl font-extralight text-neutral-900">{stats.totalCourses}</div>
-            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Courses</p>
+          <div className="space-y-1 sm:space-y-2">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-extralight text-neutral-900">{stats.totalCourses}</div>
+            <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">Courses</p>
           </div>
         </div>
 
-        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
-              <TrendingUp className="h-6 w-6 text-white" />
+        <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="text-5xl font-extralight text-neutral-900">{stats.recentUploads}</div>
-            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Recent (7d)</p>
+          <div className="space-y-1 sm:space-y-2">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-extralight text-neutral-900">{stats.recentUploads}</div>
+            <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">Recent (7d)</p>
           </div>
         </div>
 
-        <div className="bg-white border border-neutral-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
-              <Download className="h-6 w-6 text-white" />
+        <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-neutral-900 flex items-center justify-center">
+              <Download className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="text-5xl font-extralight text-neutral-900">--</div>
-            <p className="text-sm text-neutral-500 uppercase tracking-wider font-medium">Storage</p>
+          <div className="space-y-1 sm:space-y-2">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-extralight text-neutral-900">--</div>
+            <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">Storage</p>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white border border-neutral-100 rounded-2xl p-8">
-        <div className="mb-8 space-y-2">
-          <h3 className="text-3xl font-light text-neutral-900">Quick Actions</h3>
-          <p className="text-neutral-500 font-light">Common administrative tasks</p>
+      <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8">
+        <div className="mb-6 md:mb-8 space-y-1 sm:space-y-2">
+          <h3 className="text-2xl sm:text-3xl font-light text-neutral-900">Quick Actions</h3>
+          <p className="text-sm sm:text-base text-neutral-500 font-light">Common administrative tasks</p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
           <Link href="/admin/dashboard/files">
-            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
-                  <Upload className="h-7 w-7 text-white" />
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <Upload className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
-                <span className="font-light text-neutral-900">Upload File</span>
+                <span className="text-sm sm:text-base font-light text-neutral-900">Upload File</span>
               </div>
             </button>
           </Link>
           <Link href="/admin/dashboard/courses">
-            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
-                  <BookOpen className="h-7 w-7 text-white" />
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
-                <span className="font-light text-neutral-900">Manage Courses</span>
+                <span className="text-sm sm:text-base font-light text-neutral-900">Manage Courses</span>
               </div>
             </button>
           </Link>
           <Link href="/admin/dashboard/analytics">
-            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
-                  <TrendingUp className="h-7 w-7 text-white" />
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <TrendingUp className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
-                <span className="font-light text-neutral-900">View Analytics</span>
+                <span className="text-sm sm:text-base font-light text-neutral-900">View Analytics</span>
               </div>
             </button>
           </Link>
           <Link href="/admin/dashboard/settings">
-            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="w-14 h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
-                  <Users className="h-7 w-7 text-white" />
+            <button className="w-full bg-neutral-50 hover:bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 flex items-center justify-center transition-colors">
+                  <Users className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
-                <span className="font-light text-neutral-900">Settings</span>
+                <span className="text-sm sm:text-base font-light text-neutral-900">Settings</span>
               </div>
             </button>
           </Link>
@@ -241,45 +241,45 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Recent Files */}
-      <div className="bg-white border border-neutral-100 rounded-2xl p-8">
-        <div className="mb-8 space-y-2">
-          <h3 className="text-3xl font-light text-neutral-900">Recent Uploads</h3>
-          <p className="text-neutral-500 font-light">Latest files added to the system</p>
+      <div className="bg-white border border-neutral-100 rounded-2xl p-4 sm:p-6 md:p-8">
+        <div className="mb-6 md:mb-8 space-y-1 sm:space-y-2">
+          <h3 className="text-2xl sm:text-3xl font-light text-neutral-900">Recent Uploads</h3>
+          <p className="text-sm sm:text-base text-neutral-500 font-light">Latest files added to the system</p>
         </div>
         {recentFiles.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-neutral-50 flex items-center justify-center mb-6">
-              <FileText className="h-10 w-10 text-neutral-300" />
+          <div className="text-center py-12 sm:py-16">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-neutral-50 flex items-center justify-center mb-4 sm:mb-6">
+              <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-neutral-300" />
             </div>
-            <p className="text-neutral-500 font-light mb-6">No files uploaded yet</p>
+            <p className="text-sm sm:text-base text-neutral-500 font-light mb-4 sm:mb-6">No files uploaded yet</p>
             <Link href="/admin/dashboard/files">
-              <button className="px-6 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-medium">
+              <button className="px-6 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-all duration-300 font-medium text-sm sm:text-base">
                 Upload your first file
               </button>
             </Link>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {recentFiles.map((file) => (
               <div
                 key={file.id}
-                className="flex items-center justify-between p-5 rounded-2xl border border-neutral-100 bg-white hover:bg-neutral-50 hover:shadow-md transition-all duration-300"
+                className="flex items-center justify-between p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border border-neutral-100 bg-white hover:bg-neutral-50 hover:shadow-md transition-all duration-300"
               >
-                <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className="h-12 w-12 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0">
-                    <FileText className="h-6 w-6 text-neutral-900" />
+                <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0">
+                    <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-neutral-900" />
                   </div>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <p className="font-light text-neutral-900 truncate">
+                  <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1">
+                    <p className="text-sm sm:text-base font-light text-neutral-900 truncate">
                       {file.title}
                     </p>
-                    <p className="text-sm text-neutral-500 font-light">
+                    <p className="text-xs sm:text-sm text-neutral-500 font-light">
                       {file.course_code} • {file.category}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-6 text-sm text-neutral-500 font-light">
-                  <div className="hidden sm:flex items-center gap-2">
+                <div className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm text-neutral-500 font-light">
+                  <div className="hidden md:flex items-center gap-2">
                     <Clock className="h-4 w-4" />
                     {formatDate(file.created_at)}
                   </div>
