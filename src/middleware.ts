@@ -66,6 +66,7 @@ export async function middleware(request: NextRequest) {
     '/auth/callback',
     '/onboarding',
     '/admin', // Admin login page
+    '/contributors', // Contributors hall of fame page
   ]
 
   // Check if current path is public
