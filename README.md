@@ -1,75 +1,119 @@
-# Course Resources Management System
+# Missing Semester - AIUB Course Resources Platform
 
-A full-stack web application for students to browse, preview, and download course resources (PDFs, DOCs, images) organized by Course → Category → File.
+> **Everything you need to excel, all in one place**
 
-## 🧰 Tech Stack
+A modern, ultra-minimalistic course resources platform for AIUB students. Browse, preview, and download course materials with a beautiful, responsive interface.
 
-- **Frontend**: Next.js 14 + TypeScript + Tailwind CSS + shadcn/ui
-- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+**Live Site**: [https://aiubfiles.app](https://aiubfiles.app)
+
+## 🎨 Design Philosophy
+
+Built with an **ultra-minimalistic aesthetic**:
+- Extralight fonts (100-200 weight)
+- Huge typography (text-5xl to text-9xl)
+- Generous whitespace and breathing room
+- Glass morphism effects
+- Smooth transitions (300-700ms)
+- Pill-shaped buttons (rounded-full)
+- Gradient accents
 
 ## ✨ Features
 
-### Student Interface
-- 📚 Browse all available courses
-- 📂 View resources organized by categories (Midterm, Final, Others)
-- 👁️ Preview files inline (PDFs, images, text files)
-- ⬇️ Download resources with one click
-- 🔍 Clean, responsive UI with Tailwind CSS
-- 🌐 Open access - no login required
+### 🎓 Student Interface
+- **Browse Courses** - Clean grid of all available courses
+- **Course Pinning** - Pin favorite courses for quick access with smooth animations
+- **File Preview** - View PDFs, images, and documents inline
+- **Download Resources** - One-click downloads with organized categories
+- **Search & Filter** - Find courses and resources quickly
+- **Responsive Design** - Perfect experience on mobile, tablet, and desktop
+- **Google OAuth** - Simple one-click authentication
+- **Public Contributors Page** - See who's sharing notes and solutions
 
-### Admin Dashboard ⭐ NEW!
-**Complete, powerful admin panel with enterprise features:**
+### 👨‍💼 Admin Dashboard
+**Complete admin panel with enterprise features:**
 
-#### 🏠 Dashboard Home
-- Real-time statistics (files, courses, storage, downloads)
-- Quick action buttons for common tasks
-- Recent activity feed with timestamps
-- Beautiful stat cards with trend indicators
+#### 📊 Dashboard Home
+- Real-time statistics (files, courses, recent uploads)
+- Quick action buttons
+- Recent activity feed
+- Beautiful stat cards
+
+#### 👥 User Management (NEW!)
+- View all registered users
+- Search by name, email, or student ID
+- Filter by role (students/admins)
+- Export user data to CSV
+- User stats (total users, students, admins, completed profiles)
+- Mobile-responsive table and card views
 
 #### 📁 File Management
-- Upload files with drag-and-drop support
-- Advanced search and filtering by course/category
-- Data table with sortable columns
-- Delete files with confirmation dialogs
-- File details: title, size, date, course, category
-- Badge indicators for categories
+- Upload files with drag-and-drop
+- Advanced search and filtering
+- Organize by course and category
+- File preview and deletion
+- Bulk operations support
 
 #### 📚 Course Management
-- Add/Edit/Delete courses with full CRUD operations
-- Course details: code, name, department, description, semester, instructor, credits
-- Department filtering (11 departments supported)
-- Search by course code or name
-- Dependency checks before deletion
-- Beautiful table layout with action buttons
+- Full CRUD operations for courses
+- Department filtering
+- Course details management
+- Dependency checking
 
-#### 📊 Analytics & Insights
-- Comprehensive system analytics
+#### � Analytics & Insights
 - Top courses by file count
-- Category distribution with charts
-- Department-wise course breakdown
+- Category distribution
 - Storage usage tracking
-- Upload trends (daily/weekly/monthly)
-- Visual progress bars and badges
+- Upload trends
+
+#### 📢 Broadcast System
+- Send announcements to all users
+- Rich text editor
+- Notification delivery
 
 #### ⚙️ Settings
-- Profile management (email, user ID, account info)
-- Change password with validation
-- Update email with verification
-- Security status overview
-- System information and statistics
-- Tabbed interface for easy navigation
+- Profile management
+- Password changes
+- System configuration
 
-#### 🎨 UI/UX Features
-- Clean, modern design with gradient backgrounds
-- Responsive sidebar navigation
-- Mobile-friendly with hamburger menu
-- Color-coded sections (blue/green/purple/orange)
-- Beautiful cards, tables, and dialogs
-- Toast notifications for actions
-- Loading states and animations
-- Icon system with Lucide icons
+**Complete Guide**: See [ADMIN-DASHBOARD-GUIDE.md](./ADMIN-DASHBOARD-GUIDE.md)
 
-See [ADMIN-DASHBOARD-GUIDE.md](./ADMIN-DASHBOARD-GUIDE.md) for complete documentation.
+## 🧰 Tech Stack
+
+- **Frontend**: Next.js 14.2.33 + TypeScript + Tailwind CSS
+- **UI Components**: shadcn/ui + Lucide Icons
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **Authentication**: Google OAuth (Supabase Auth)
+- **Deployment**: Vercel
+- **Testing**: TestSprite MCP (integrated)
+- **SEO**: Comprehensive metadata, sitemap, robots.txt, JSON-LD
+
+## 📱 Pages & Routes
+
+### Public Pages
+- `/` - Homepage with hero, features, stats
+- `/courses` - Browse all courses
+- `/course/[id]` - Course detail with files
+- `/auth/login` - Google OAuth login
+- `/contributors` - Hall of fame for contributors
+- `/about` - About the platform
+- `/contact` - Contact information
+- `/help` - Help center
+- `/privacy` - Privacy policy
+- `/terms` - Terms of service
+
+### Protected Pages (After Login)
+- `/onboarding` - Complete profile (new users)
+- `/profile` - User profile management
+
+### Admin Pages (Admin Only)
+- `/admin` - Admin login
+- `/admin/dashboard` - Dashboard home
+- `/admin/dashboard/users` - User management
+- `/admin/dashboard/files` - File management
+- `/admin/dashboard/courses` - Course management
+- `/admin/dashboard/analytics` - Analytics
+- `/admin/dashboard/broadcast` - Broadcast messages
+- `/admin/dashboard/settings` - System settings
 
 ## 🚀 Getting Started
 
@@ -237,30 +281,82 @@ course-resources-app/
 
 ## 🗄️ Database Schema
 
-### Courses Table
+### Tables
+
+#### `courses`
 - `id` (UUID, Primary Key)
 - `code` (VARCHAR) - e.g., "CSC 1101"
 - `name` (VARCHAR) - e.g., "Introduction to Computer Studies"
 - `department` (VARCHAR) - e.g., "COMPUTER SCIENCE"
+- `description` (TEXT) - Course description
+- `semester` (VARCHAR) - e.g., "Fall 2024"
+- `instructor` (VARCHAR) - Instructor name
+- `credits` (INTEGER) - Credit hours
 - `created_at` (TIMESTAMP)
 
-### Files Table
+#### `files`
 - `id` (UUID, Primary Key)
-- `course_id` (UUID, Foreign Key)
+- `course_id` (UUID, Foreign Key → courses)
 - `category` (VARCHAR) - "Midterm", "Final", or "Others"
 - `title` (VARCHAR) - File display name
-- `file_path` (TEXT) - Storage path
+- `file_path` (TEXT) - Storage path in Supabase Storage
 - `file_type` (VARCHAR) - MIME type
 - `file_size` (BIGINT) - File size in bytes
 - `uploader_id` (UUID) - Admin user ID
 - `uploaded_at` (TIMESTAMP)
 
+#### `user_profiles`
+- `user_id` (UUID, Primary Key, Foreign Key → auth.users)
+- `full_name` (VARCHAR) - User's full name
+- `student_id` (VARCHAR) - Student ID number
+- `email` (VARCHAR) - User email
+- `phone` (VARCHAR) - Phone number
+- `gender` (VARCHAR) - Gender
+- `role` (VARCHAR) - 'student' or 'admin'
+- `profile_completed` (BOOLEAN) - Profile completion status
+- `created_at` (TIMESTAMP)
+- `updated_at` (TIMESTAMP)
+
+#### `pinned_courses`
+- `id` (UUID, Primary Key)
+- `user_id` (UUID, Foreign Key → auth.users)
+- `course_id` (UUID, Foreign Key → courses)
+- `pinned_at` (TIMESTAMP)
+
+### Storage Buckets
+
+- `course-files` - Public bucket for all course resources
+- `avatars` - User profile pictures (optional)
+
 ## 🔐 Security
 
-- Row Level Security (RLS) enabled on all tables
-- Public read access for students (no login required)
-- Write access restricted to authenticated admin users
-- Secure file storage with Supabase Storage
+- **Row Level Security (RLS)** enabled on all tables
+- **Public routes**: Homepage, courses, contributors, about, contact, help, privacy, terms
+- **Protected routes**: Profile, onboarding, pinned courses (require authentication)
+- **Admin routes**: Admin dashboard and all sub-pages (require admin role)
+- **Middleware protection**: Automatic redirects for unauthorized access
+- **Google OAuth**: Secure authentication via Supabase Auth
+- **Role-based access control**: 'student' and 'admin' roles with check constraints
+- **Secure file storage**: Supabase Storage with proper access policies
+
+## 🚀 SEO & Performance
+
+### SEO Features
+- **Comprehensive metadata**: Title templates, descriptions, OpenGraph tags
+- **Sitemap.xml**: Auto-generated dynamic sitemap
+- **Robots.txt**: Search engine directives
+- **JSON-LD**: Structured data for rich snippets
+- **Twitter Cards**: Social media preview optimization
+- **Canonical URLs**: Proper URL structure
+- **Mobile-first**: Responsive design for all devices
+
+### Performance
+- **Next.js 14**: App Router for optimal performance
+- **Static Generation**: Pre-rendered pages where possible
+- **Image Optimization**: Next.js Image component
+- **Code Splitting**: Automatic code splitting
+- **PWA Support**: Service worker with next-pwa
+- **Fast Loading**: Optimized bundle sizes
 
 ## 🚢 Deployment
 
@@ -308,13 +404,49 @@ MIT License - feel free to use this project for your own purposes!
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+Contributions are welcome! See our [Contributors Page](https://aiubfiles.app/contributors) for the hall of fame.
 
-## 👏 Credits
+To contribute:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+5. Your name will be added to the contributors page!
 
-Built with:
-- [Next.js](https://nextjs.org/)
-- [Supabase](https://supabase.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Lucide Icons](https://lucide.dev/)
+## � Acknowledgments
+
+- **Contributors**: See [/contributors](https://aiubfiles.app/contributors)
+- **AIUB Students**: For using and providing feedback
+- **Open Source Community**: For the amazing tools and libraries
+
+## 📞 Support
+
+- **Email**: [contact@aiubfiles.app](mailto:contact@aiubfiles.app)
+- **GitHub Issues**: Report bugs or request features
+- **Help Center**: Visit [/help](https://aiubfiles.app/help) for FAQs
+
+## 🔄 Recent Updates
+
+### Version 2.0 (October 2025)
+- ✅ Complete UI redesign with ultra-minimalistic aesthetic
+- ✅ Added user management page for admins
+- ✅ Comprehensive SEO optimization
+- ✅ Mobile-responsive admin dashboard
+- ✅ Contributors hall of fame page
+- ✅ Course pinning with smooth animations
+- ✅ Improved authentication flow
+- ✅ Database role migration (user → student)
+- ✅ TestSprite integration for automated testing
+
+### Version 1.0 (September 2025)
+- 🎉 Initial release
+- Admin dashboard with file and course management
+- Google OAuth authentication
+- File preview and download
+- Responsive design
+
+---
+
+**Built with ❤️ for AIUB Students**
+
+[Website](https://aiubfiles.app) • [GitHub](https://github.com/codewithtanvir/the-missing-semester-aiub) • [Contributors](https://aiubfiles.app/contributors)
