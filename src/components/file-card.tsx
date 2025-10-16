@@ -44,42 +44,36 @@ export function FileCard({ file, onPreview }: FileCardProps) {
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <span>{getFileIcon(file.file_type)}</span>
-              <span className="line-clamp-1">{file.title}</span>
-            </CardTitle>
-            <CardDescription className="mt-1.5">
-              {formatFileSize(file.file_size)} • {formatDate(file.created_at)}
-            </CardDescription>
-          </div>
+    <div className="border border-neutral-200 bg-white p-5 hover:border-neutral-300 hover:shadow-sm transition-all duration-200">
+      {/* File Icon & Title */}
+      <div className="mb-4">
+        <div className="text-2xl mb-3">{getFileIcon(file.file_type)}</div>
+        <h3 className="text-neutral-900 font-normal mb-2 line-clamp-2 min-h-[3rem] leading-snug">
+          {file.title}
+        </h3>
+        <div className="text-sm text-neutral-400">
+          {formatFileSize(file.file_size)} <span className="text-neutral-300">•</span> {formatDate(file.created_at)}
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onPreview(file)}
-            className="flex-1"
-          >
-            <Eye className="h-4 w-4 mr-2" />
-            Preview
-          </Button>
-          <Button
-            size="sm"
-            onClick={handleDownload}
-            disabled={downloading}
-            className="flex-1"
-          >
-            <Download className="h-4 w-4 mr-2" />
-            {downloading ? 'Downloading...' : 'Download'}
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex gap-2 pt-4 border-t border-neutral-100">
+        <button
+          onClick={() => onPreview(file)}
+          className="flex-1 px-4 py-2 text-sm text-neutral-700 border border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 transition-colors duration-200"
+        >
+          <Eye className="h-4 w-4 inline mr-2" />
+          Preview
+        </button>
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className="flex-1 px-4 py-2 text-sm text-white bg-neutral-900 hover:bg-neutral-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Download className="h-4 w-4 inline mr-2" />
+          {downloading ? 'Downloading...' : 'Download'}
+        </button>
+      </div>
+    </div>
   );
 }

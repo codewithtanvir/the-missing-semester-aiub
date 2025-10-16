@@ -101,10 +101,10 @@ export default function CoursePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-neutral-50">
       <Navigation />
 
-      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
         <Breadcrumb 
           items={[
             { label: 'Courses', href: '/courses' },
@@ -112,41 +112,49 @@ export default function CoursePage() {
           ]} 
         />
 
-        {/* Course Header */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100">
-          <div className="flex flex-col md:flex-row md:items-start gap-4 sm:gap-6">
-            <div className="rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 p-3 sm:p-4 shadow-lg w-fit mx-auto md:mx-0">
-              <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+        {/* Course Header Card */}
+        <div className="border border-neutral-200 bg-white p-8 mb-12 mt-8">
+          <div className="flex items-start gap-6">
+            {/* Icon */}
+            <div className="w-14 h-14 bg-neutral-900 flex items-center justify-center shrink-0">
+              <BookOpen className="h-7 w-7 text-white" />
             </div>
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-                {course.code}
-              </h1>
-              <p className="text-lg sm:text-xl text-gray-700 mb-3 sm:mb-4">{course.name}</p>
-              <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm justify-center md:justify-start">
+            
+            {/* Content */}
+            <div className="flex-1">
+              <div className="flex items-baseline gap-4 mb-2">
+                <h1 className="text-3xl font-light text-neutral-900">
+                  {course.code}
+                </h1>
                 {course.department && (
-                  <span className="px-2.5 sm:px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
+                  <span className="px-2 py-0.5 bg-neutral-100 text-neutral-700 text-xs border border-neutral-200">
                     {course.department}
                   </span>
                 )}
+              </div>
+              
+              <p className="text-xl text-neutral-700 mb-3 font-light">{course.name}</p>
+              
+              <div className="flex flex-wrap gap-4 text-sm text-neutral-500">
                 {course.instructor && (
-                  <span className="px-2.5 sm:px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
-                    👨‍🏫 {course.instructor}
-                  </span>
+                  <span>{course.instructor}</span>
                 )}
                 {course.semester && (
-                  <span className="px-2.5 sm:px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
-                    📅 {course.semester}
-                  </span>
+                  <>
+                    <span className="text-neutral-300">•</span>
+                    <span>{course.semester}</span>
+                  </>
                 )}
                 {course.credits && (
-                  <span className="px-2.5 sm:px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
-                    🎓 {course.credits} Credits
-                  </span>
+                  <>
+                    <span className="text-neutral-300">•</span>
+                    <span>{course.credits} Credits</span>
+                  </>
                 )}
               </div>
+              
               {course.description && (
-                <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">
+                <p className="mt-4 text-neutral-600 leading-relaxed">
                   {course.description}
                 </p>
               )}
@@ -154,19 +162,41 @@ export default function CoursePage() {
           </div>
         </div>
 
-        {/* Files Tabs */}
+        {/* Tabs Navigation */}
         <Tabs defaultValue="Midterm" className="w-full">
-          <TabsList className="grid w-full max-w-full sm:max-w-2xl grid-cols-4 mx-auto h-auto">
-            <TabsTrigger value="Midterm" className="text-xs sm:text-sm py-2 sm:py-2.5">Midterm</TabsTrigger>
-            <TabsTrigger value="Final" className="text-xs sm:text-sm py-2 sm:py-2.5">Final</TabsTrigger>
-            <TabsTrigger value="Solutions" className="text-xs sm:text-sm py-2 sm:py-2.5">Solutions</TabsTrigger>
-            <TabsTrigger value="Others" className="text-xs sm:text-sm py-2 sm:py-2.5">Others</TabsTrigger>
-          </TabsList>
+          <div className="border-b border-neutral-200 mb-8 bg-white px-6">
+            <TabsList className="h-auto p-0 bg-transparent space-x-8">
+              <TabsTrigger 
+                value="Midterm" 
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+              >
+                Midterm
+              </TabsTrigger>
+              <TabsTrigger 
+                value="Final"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+              >
+                Final
+              </TabsTrigger>
+              <TabsTrigger 
+                value="Solutions"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+              >
+                Solutions
+              </TabsTrigger>
+              <TabsTrigger 
+                value="Others"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-neutral-900 data-[state=active]:bg-transparent bg-transparent px-0 pb-3 pt-4 text-neutral-600 data-[state=active]:text-neutral-900 data-[state=active]:shadow-none font-normal"
+              >
+                Others
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {(['Midterm', 'Final', 'Solutions', 'Others'] as Category[]).map((category) => (
-            <TabsContent key={category} value={category} className="mt-4 sm:mt-6">
+            <TabsContent key={category} value={category} className="mt-0">
               {files[category].length > 0 ? (
-                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {files[category].map((file) => (
                     <FileCard
                       key={file.id}
@@ -176,9 +206,9 @@ export default function CoursePage() {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-8 sm:p-12 text-center">
-                  <FileText className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mb-3 sm:mb-4" />
-                  <p className="text-sm sm:text-base text-gray-600">No files available for {category} yet.</p>
+                <div className="text-center py-20 bg-white border border-neutral-100">
+                  <FileText className="mx-auto h-12 w-12 text-neutral-200 mb-4" />
+                  <p className="text-neutral-500">No files available for {category}</p>
                 </div>
               )}
             </TabsContent>
