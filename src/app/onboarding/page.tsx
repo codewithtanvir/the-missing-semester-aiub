@@ -139,6 +139,7 @@ export default function OnboardingPage() {
           full_name: formData.fullName.trim(),
           student_id: formData.studentId.trim(),
           gender: formData.gender,
+          role: 'student',
           profile_completed: true
         } as any);
 
